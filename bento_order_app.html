@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="theme-color" content="#B85C38"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="お弁当注文"/>
+<title>お弁当注文システム</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','Noto Sans JP',sans-serif;background:#f5f4f0;color:#1a1a18;font-size:16px}
+:root{
+  --warm:#B85C38;--warm-hover:#993C1D;--warm-light:#FAECE7;--warm-border:#F5C4B3;
+  --green:#1D9E75;--green-light:#E1F5EE;--green-border:#9FE1CB;--green-dark:#085041;
+  --amber:#BA7517;--amber-light:#FAEEDA;--amber-border:#FAC775;--amber-dark:#854F0B;
+  --red:#E24B4A;--red-light:#FCEBEB;--red-border:#F7C1C1;--red-dark:#A32D2D;
+  --bg:#f5f4f0;--surface:#ffffff;--surface2:#f1efe8;
+  --text:#1a1a18;--text2:#5f5e5a;--text3:#888780;
+  --border:#d3d1c7;--border2:#b4b2a9;
+  --radius:10px;--radius-sm:7px;
+}
+.app{min-height:100vh;background:var(--bg);padding-bottom:env(safe-area-inset-bottom)}
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.logo{width:38px;height:38px;background:var(--warm-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.header h1{font-size:16px;font-weight:600;color:var(--text)}
+.header p{font-size:11px;color:var(--text3);margin-top:1px}
+.content{max-width:500px;margin:0 auto;padding:16px}
+.screen{display:none}.screen.active{display:block}
+
+/* LOGIN */
+.login-hero{text-align:center;padding:28px 0 20px}
+.login-icon{font-size:48px;margin-bottom:12px}
+.login-hero h2{font-size:20px;font-weight:600;color:var(--text);margin-bottom:6px}
+.login-hero p{font-size:13px;color:var(--text2)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px}
+.field select,.field input{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;background:var(--surface);color:var(--text);outline:none;-webkit-appearance:none;appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888780' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:36px}
+.field select:focus,.field input:focus{border-color:var(--warm)}
+.btn{width:100%;padding:13px;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.btn:active{transform:scale(0.98)}
+.btn-primary{background:var(--warm);color:#fff}
+.btn-primary:hover{background:var(--warm-hover)}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:10px}
+.err-msg{font-size:13px;color:var(--red-dark);margin-top:10px;padding:10px 12px;background:var(--red-light);border-radius:var(--radius-sm);display:none}
+
+/* USER BAR */
+.user-bar{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.user-name{font-size:14px;font-weight:600;color:var(--text)}
+.logout-btn{font-size:12px;color:var(--text3);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px}
+.logout-btn:hover{background:var(--border)}
+
+/* COUNTDOWN */
+.countdown-bar{border-radius:var(--radius-sm);padding:13px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.countdown-bar.ok{background:var(--green-light);border:1px solid var(--green-border)}
+.countdown-bar.warn{background:var(--amber-light);border:1px solid var(--amber-border)}
+.countdown-bar.late{background:var(--red-light);border:1px solid var(--red-border)}
+.countdown-bar.over{background:var(--surface2);border:1px solid var(--border)}
+.cd-left{display:flex;flex-direction:column;gap:2px}
+.cd-label{font-size:12px;font-weight:500}
+.cd-label.ok{color:var(--green-dark)}.cd-label.warn{color:var(--amber-dark)}.cd-label.late{color:var(--red-dark)}.cd-label.over{color:var(--text3)}
+.cd-sub{font-size:11px}
+.cd-sub.ok{color:var(--green)}.cd-sub.warn{color:var(--amber-dark)}.cd-sub.late{color:var(--red-dark)}.cd-sub.over{color:var(--text3)}
+.cd-time{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+.cd-time.ok{color:var(--green)}.cd-time.warn{color:var(--amber)}.cd-time.late{color:var(--red)}.cd-time.over{color:var(--text3)}
+.late-notice{background:var(--amber-light);border:1px solid var(--amber-border);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--amber-dark);display:none}
+
+/* DATE BAR */
+.date-bar{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);margin-bottom:14px;padding:10px 14px;background:var(--surface2);border-radius:var(--radius-sm)}
+
+/* SHOP CARDS */
+.shop-grid{display:grid;gap:10px;margin-bottom:16px}
+.shop-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.shop-card:active{transform:scale(0.99)}
+.shop-card.selected{border-color:var(--warm);border-width:2px;box-shadow:0 0 0 3px rgba(184,92,56,0.1)}
+.shop-img{width:100%;height:88px;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;text-align:center;line-height:1.5}
+.shop-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:3px}
+.shop-tel{font-size:11px;color:var(--text3)}
+.other-input{display:none;margin-top:10px}.other-input.show{display:block}
+.other-input input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--surface);color:var(--text);outline:none}
+.other-input input:focus{border-color:var(--warm)}
+
+/* NOTE / TEXTAREA */
+.section-title{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:8px}
+textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--surface);color:var(--text);resize:none;height:72px;outline:none;font-family:inherit}
+textarea:focus{border-color:var(--warm)}
+
+/* SUCCESS / CLOSED */
+.success-card{border-radius:var(--radius);padding:22px;text-align:center;margin-bottom:14px}
+.success-card.ok-success{background:var(--green-light);border:1px solid var(--green-border)}
+.success-card.late-success{background:var(--amber-light);border:1px solid var(--amber-border)}
+.success-icon{font-size:36px;margin-bottom:10px}
+.success-card h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.success-card.ok-success h3{color:var(--green-dark)}
+.success-card.late-success h3{color:var(--amber-dark)}
+.success-card p{font-size:13px}
+.success-card.ok-success p{color:var(--green)}
+.success-card.late-success p{color:var(--amber-dark)}
+.closed-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:22px;text-align:center;margin-bottom:14px}
+.closed-card p{font-size:15px;font-weight:600;color:var(--text2);margin-bottom:4px}
+.closed-card span{font-size:12px;color:var(--text3)}
+
+/* ADMIN TABS */
+.tab-bar{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:14px}
+.tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:500;cursor:pointer;background:transparent;border:none;color:var(--text3);transition:background .15s,color .15s}
+.tab.active{background:var(--warm);color:#fff}
+
+/* SUMMARY */
+.summary-box{background:var(--surface2);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:12px;font-size:13px;color:var(--text2)}
+.summary-box strong{color:var(--text);font-weight:600}
+
+/* ORDER ITEMS */
+.order-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 14px;margin-bottom:8px}
+.order-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.order-person{font-size:14px;font-weight:600;color:var(--text)}
+.order-shop-label{font-size:13px;color:var(--warm);font-weight:500;margin-bottom:4px}
+.order-note-text{font-size:12px;color:var(--text3);margin-bottom:4px}
+.order-meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.order-time-small{font-size:11px;color:var(--text3)}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-pending{background:var(--amber-light);color:var(--amber-dark)}
+.badge-done{background:var(--green-light);color:var(--green-dark)}
+.badge-late{background:var(--red-light);color:var(--red-dark)}
+.mark-btn{font-size:12px;padding:5px 11px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:var(--surface);color:var(--text2)}
+.mark-btn:active{background:var(--surface2)}
+.empty{text-align:center;padding:36px 16px;color:var(--text3);font-size:13px}
+
+/* HISTORY */
+.hist-date-list{display:flex;flex-direction:column;gap:8px}
+.hist-date-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.hist-date-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;user-select:none}
+.hist-date-header:active{background:var(--surface2)}
+.hist-date-title{font-size:15px;font-weight:600;color:var(--text)}
+.hist-date-meta{font-size:12px;color:var(--text3);margin-top:2px}
+.hist-chevron{font-size:12px;color:var(--text3);transition:transform .2s}
+.hist-chevron.open{transform:rotate(180deg)}
+.hist-date-body{display:none;border-top:1px solid var(--border);padding:12px 14px}
+.hist-date-body.open{display:block}
+.hist-summary-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.hist-chip{background:var(--surface2);border-radius:20px;padding:4px 11px;font-size:12px;color:var(--text2)}
+.hist-chip span{font-weight:600;color:var(--text)}
+.hist-table{width:100%;border-collapse:collapse;font-size:13px}
+.hist-table th{text-align:left;font-size:11px;font-weight:500;color:var(--text3);padding:4px 6px 7px;border-bottom:1px solid var(--border)}
+.hist-table td{padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+.hist-table tr:last-child td{border-bottom:none}
+.shop-tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.tag-katsu{background:var(--warm-light);color:#993C1D}
+.tag-coco{background:var(--green-light);color:var(--green-dark)}
+.tag-other{background:var(--surface2);color:var(--text3)}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header">
+  <div class="logo">🍱</div>
+  <div>
+    <h1>お弁当注文システム</h1>
+    <p>営業企画課</p>
+  </div>
+</div>
+<div class="content">
+
+<!-- LOGIN -->
+<div class="screen active" id="screen-login">
+  <div class="login-hero">
+    <div class="login-icon">🍱</div>
+    <h2>お弁当注文</h2>
+    <p>苗字と内線番号でログインしてください</p>
+  </div>
+  <div class="card">
+    <div class="field">
+      <label>苗字を選択</label>
+      <select id="login-name"><option value="">-- 選択してください --</option></select>
+    </div>
+    <div class="field">
+      <label>パスワード（内線番号）</label>
+      <input type="password" id="login-pass" placeholder="例：84522" inputmode="numeric"/>
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">ログイン</button>
+    <div class="err-msg" id="login-err">苗字またはパスワードが正しくありません</div>
+  </div>
+</div>
+
+<!-- ORDER -->
+<div class="screen" id="screen-order">
+  <div class="user-bar">
+    <div>
+      <div class="user-name" id="order-username"></div>
+      <div style="font-size:11px;color:var(--text3)" id="order-ext"></div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">ログアウト</button>
+  </div>
+  <div class="countdown-bar ok" id="cd-bar">
+    <div class="cd-left">
+      <div class="cd-label ok" id="cd-label">締切まで</div>
+      <div class="cd-sub ok" id="cd-sub">本日 9:50 締切</div>
+    </div>
+    <div class="cd-time ok" id="cd-time">--:--</div>
+  </div>
+  <div class="late-notice" id="late-notice"><strong>締切時刻を過ぎています。</strong>　遅れての注文となりますが、11:00まで受け付けます。</div>
+  <div id="order-success" style="display:none">
+    <div class="success-card ok-success" id="success-card">
+      <div class="success-icon">✅</div>
+      <h3 id="success-title">注文を受け付けました</h3>
+      <p id="success-detail"></p>
+    </div>
+    <button class="btn btn-secondary" onclick="resetOrder()">注文をやり直す</button>
+  </div>
+  <div id="order-closed" style="display:none">
+    <div class="closed-card">
+      <p>本日の受付は終了しました</p>
+      <span>受付時間：〜11:00</span>
+    </div>
+  </div>
+  <div id="order-form">
+    <div class="date-bar"><span>📅</span><span id="today-date"></span></div>
+    <div class="section-title">注文先を選んでください</div>
+    <div class="shop-grid">
+      <div class="shop-card" id="shop-0" onclick="selectShop(0)">
+        <div class="shop-img" style="background:var(--warm-light);color:#993C1D">かつみや<br><span style="font-size:11px;font-weight:400">FAX注文</span></div>
+        <div class="shop-name">かつみや</div>
+        <div class="shop-tel">☎ 072-432-6177　FAX: 072-433-4716</div>
+      </div>
+      <div class="shop-card" id="shop-1" onclick="selectShop(1)">
+        <div class="shop-img" style="background:var(--green-light);color:var(--green-dark)">手作り弁当CoCo<br><span style="font-size:11px;font-weight:400">日替わり弁当</span></div>
+        <div class="shop-name">手作り弁当CoCo</div>
+        <div class="shop-tel">☎ 072-426-7370</div>
+      </div>
+      <div class="shop-card" id="shop-2" onclick="selectShop(2)">
+        <div class="shop-img" style="background:var(--surface2);font-size:32px">📝</div>
+        <div class="shop-name">その他</div>
+        <div class="shop-tel">注文先を下記に入力してください</div>
+        <div class="other-input" id="other-input">
+          <input type="text" id="other-shop-name" placeholder="注文先を入力"/>
+        </div>
+      </div>
+    </div>
+    <div class="section-title">備考（任意）</div>
+    <div style="margin-bottom:18px">
+      <textarea id="order-note" placeholder="数量・メニューの希望などあればご記入ください"></textarea>
+    </div>
+    <button class="btn btn-primary" onclick="submitOrder()">注文する</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="screen" id="screen-admin">
+  <div class="user-bar">
+    <div>
+      <div class="user-name">管理者画面</div>
+      <div style="font-size:11px;color:var(--text3)" id="admin-name-bar"></div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">ログアウト</button>
+  </div>
+  <div class="countdown-bar ok" id="cd-bar-admin">
+    <div class="cd-left">
+      <div class="cd-label ok" id="cd-label-admin">締切まで</div>
+      <div class="cd-sub ok" id="cd-sub-admin">本日 9:50 締切</div>
+    </div>
+    <div class="cd-time ok" id="cd-time-admin">--:--</div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab active" id="tab-today" onclick="showTab('today')">本日の注文</button>
+    <button class="tab" id="tab-history" onclick="showTab('history')">日別履歴</button>
+  </div>
+  <div id="admin-today">
+    <div class="summary-box" id="summary-text"></div>
+    <div id="today-orders"></div>
+  </div>
+  <div id="admin-history" style="display:none">
+    <div id="history-list"></div>
+  </div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /app -->
+
+<script>
+const MEMBERS=[
+  {name:'岩元',ext:'84550',admin:false},{name:'森田',ext:'84560',admin:false},
+  {name:'春木',ext:'84553',admin:false},{name:'足立',ext:'84523',admin:false},
+  {name:'辻野',ext:'84556',admin:false},{name:'西谷',ext:'84551',admin:false},
+  {name:'佐藤倖',ext:'84528',admin:false},{name:'中村',ext:'84561',admin:false},
+  {name:'淡路',ext:'84567',admin:false},{name:'中西勢',ext:'84555',admin:false},
+  {name:'西村',ext:'84571',admin:false},{name:'内田',ext:'84232',admin:false},
+  {name:'井上真未',ext:'84233',admin:false},{name:'谷口',ext:'84562',admin:false},
+  {name:'藤澤',ext:'84571',admin:false},{name:'森',ext:'84522',admin:false},
+  {name:'中西宣',ext:'84530',admin:false},{name:'杉本',ext:'84533',admin:false},
+  {name:'松枝',ext:'84527',admin:false},{name:'金岡',ext:'84531',admin:false},
+  {name:'上出',ext:'84552',admin:false},{name:'清水',ext:'84535',admin:false},
+  {name:'嵯峨',ext:'84532',admin:false},{name:'三古',ext:'84525',admin:false},
+  {name:'西田',ext:'84526',admin:false},{name:'田中望',ext:'84587',admin:true},
+  {name:'長島',ext:'84536',admin:false},
+];
+const SHOPS=['かつみや','手作り弁当CoCo','その他'];
+const DL_H=9,DL_M=50,CL_H=11,CL_M=0;
+let currentUser=null,selectedShop=-1;
+let orders=JSON.parse(localStorage.getItem('bento_v4')||'[]');
+function save(){localStorage.setItem('bento_v4',JSON.stringify(orders))}
+function getToday(){const d=new Date();return`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`}
+function getNow(){const d=new Date();return`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function wd(str){const d=new Date(str.replace(/\//g,'-'));return['日','月','火','水','木','金','土'][d.getDay()]}
+function secsTo(h,m){const now=new Date(),t=new Date(now);t.setHours(h,m,0,0);return Math.floor((t-now)/1000)}
+function getStatus(){const sd=secsTo(DL_H,DL_M),sc=secsTo(CL_H,CL_M);if(sd>600)return'ok';if(sd>0)return'warn';if(sc>0)return'late';return'over'}
+
+function updateCD(){
+  const st=getStatus(),sd=secsTo(DL_H,DL_M),sc=secsTo(CL_H,CL_M);
+  [['cd-bar','cd-label','cd-time','cd-sub'],['cd-bar-admin','cd-label-admin','cd-time-admin','cd-sub-admin']].forEach(([b,l,t,s])=>{
+    const bar=document.getElementById(b);if(!bar)return;
+    const lbl=document.getElementById(l),tim=document.getElementById(t),sub=document.getElementById(s);
+    bar.className='countdown-bar '+st;
+    lbl.className='cd-label '+st;tim.className='cd-time '+st;sub.className='cd-sub '+st;
+    if(st==='ok'||st==='warn'){const m=Math.floor(sd/60),s2=sd%60;lbl.textContent='締切まで';tim.textContent=`${String(m).padStart(2,'0')}:${String(s2).padStart(2,'0')}`;sub.textContent=st==='warn'?'まもなく締切（9:50）':'本日 9:50 締切'}
+    else if(st==='late'){const m=Math.floor(sc/60),s2=sc%60;lbl.textContent='受付終了まで';tim.textContent=`${String(m).padStart(2,'0')}:${String(s2).padStart(2,'0')}`;sub.textContent='締切済・11:00まで受付中'}
+    else{lbl.textContent='受付終了';tim.textContent='--:--';sub.textContent='本日の受付は終了しました'}
+  });
+  const ln=document.getElementById('late-notice');if(ln)ln.style.display=st==='late'?'block':'none';
+  const ss=document.getElementById('order-success');
+  if(ss&&ss.style.display==='none'){
+    const of=document.getElementById('order-form'),oc=document.getElementById('order-closed');
+    if(of&&oc){of.style.display=st==='over'?'none':'block';oc.style.display=st==='over'?'block':'none'}
+  }
+}
+setInterval(updateCD,1000);
+
+(function init(){
+  const sel=document.getElementById('login-name');
+  MEMBERS.forEach(m=>{const o=document.createElement('option');o.value=m.name;o.textContent=m.name+(m.admin?' （管理者）':'');sel.appendChild(o)});
+  document.getElementById('today-date').textContent=getToday()+'（'+['日','月','火','水','木','金','土'][new Date().getDay()]+'）';
+  updateCD();
+  // デモ用サンプルデータ
+  const demoBase=['2026/03/20','2026/03/19','2026/03/18'];
+  const demoShops=['かつみや','手作り弁当CoCo','かつみや','手作り弁当CoCo','その他：松屋'];
+  const demoMembers=['森田','春木','足立','辻野','西谷','佐藤倖','中村','淡路','杉本','松枝'];
+  if(orders.filter(o=>demoBase.includes(o.date)).length===0){
+    demoBase.forEach(date=>{
+      const count=5+Math.floor(Math.random()*4);
+      const shuffled=[...demoMembers].sort(()=>Math.random()-.5).slice(0,count);
+      shuffled.forEach((name,i)=>{orders.push({id:Date.now()+Math.random(),name,ext:'00000',date,time:`09:${String(20+i*3).padStart(2,'0')}`,shop:demoShops[i%demoShops.length],note:i===1?'大盛りでお願いします':'',late:false,contacted:i>2})});
+    });
+    save();
+  }
+})();
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');updateCD();window.scrollTo(0,0)}
+
+function doLogin(){
+  const name=document.getElementById('login-name').value,pass=document.getElementById('login-pass').value;
+  const err=document.getElementById('login-err');err.style.display='none';
+  const m=MEMBERS.find(x=>x.name===name&&x.ext===pass);
+  if(!m){err.style.display='block';return}
+  currentUser=m;
+  if(m.admin){document.getElementById('admin-name-bar').textContent=m.name+' ('+m.ext+')';renderAdmin();show('screen-admin')}
+  else{
+    document.getElementById('order-username').textContent=m.name+' さん';
+    document.getElementById('order-ext').textContent='内線：'+m.ext;
+    const ex=orders.find(o=>o.name===m.name&&o.date===getToday());
+    if(ex){showSuccess(ex)}
+    else{document.getElementById('order-success').style.display='none';const st=getStatus();document.getElementById('order-form').style.display=st==='over'?'none':'block';document.getElementById('order-closed').style.display=st==='over'?'block':'none'}
+    show('screen-order');
+  }
+}
+function doLogout(){currentUser=null;selectedShop=-1;document.getElementById('login-name').value='';document.getElementById('login-pass').value='';document.getElementById('login-err').style.display='none';show('screen-login')}
+function selectShop(i){selectedShop=i;document.querySelectorAll('.shop-card').forEach((c,idx)=>c.classList.toggle('selected',idx===i));document.getElementById('other-input').classList.toggle('show',i===2)}
+function submitOrder(){
+  if(getStatus()==='over'){alert('本日の受付は終了しました');return}
+  if(selectedShop<0){alert('注文先を選んでください');return}
+  let shop=SHOPS[selectedShop];
+  if(selectedShop===2){const v=document.getElementById('other-shop-name').value.trim();if(!v){alert('注文先を入力してください');return}shop='その他：'+v}
+  const note=document.getElementById('order-note').value.trim();
+  const isLate=getStatus()==='late';
+  const o={id:Date.now(),name:currentUser.name,ext:currentUser.ext,date:getToday(),time:getNow(),shop,note,late:isLate,contacted:false};
+  orders.push(o);save();showSuccess(o);
+}
+function showSuccess(o){
+  document.getElementById('order-form').style.display='none';document.getElementById('order-closed').style.display='none';document.getElementById('order-success').style.display='block';
+  const card=document.getElementById('success-card'),title=document.getElementById('success-title');
+  if(o.late){card.className='success-card late-success';title.textContent='締切後の注文を受け付けました';document.querySelector('#success-card .success-icon').textContent='⚠️'}
+  else{card.className='success-card ok-success';title.textContent='注文を受け付けました';document.querySelector('#success-card .success-icon').textContent='✅'}
+  document.getElementById('success-detail').textContent=o.shop+' に注文しました（'+o.date+' '+o.time+'）';
+}
+function resetOrder(){
+  document.getElementById('order-success').style.display='none';const st=getStatus();
+  document.getElementById('order-form').style.display=st==='over'?'none':'block';document.getElementById('order-closed').style.display=st==='over'?'block':'none';
+  selectedShop=-1;document.querySelectorAll('.shop-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('other-input').classList.remove('show');document.getElementById('other-shop-name').value='';document.getElementById('order-note').value='';
+}
+
+function shopTagClass(shop){if(shop.startsWith('かつみや'))return'tag-katsu';if(shop.startsWith('手作り'))return'tag-coco';return'tag-other'}
+
+function renderAdmin(){
+  const today=getToday();
+  const todayOrders=orders.filter(o=>o.date===today);
+  const byShop={};todayOrders.forEach(o=>{byShop[o.shop]=(byShop[o.shop]||0)+1});
+  const ss=Object.entries(byShop).map(([s,c])=>`${s}：${c}件`).join('　');
+  document.getElementById('summary-text').innerHTML=`<strong>本日の注文</strong>　合計 ${todayOrders.length} 件　${ss||'注文なし'}`;
+  const ct=document.getElementById('today-orders');ct.innerHTML='';
+  if(!todayOrders.length){ct.innerHTML='<div class="empty">本日の注文はまだありません</div>';return}
+  todayOrders.slice().reverse().forEach(o=>ct.appendChild(orderCard(o)));
+  renderHistory();
+}
+
+function renderHistory(){
+  const today=getToday();
+  const past=orders.filter(o=>o.date!==today);
+  const container=document.getElementById('history-list');container.innerHTML='';
+  if(!past.length){container.innerHTML='<div class="empty">過去の注文はありません</div>';return}
+  const byDate={};past.forEach(o=>{if(!byDate[o.date])byDate[o.date]=[];byDate[o.date].push(o)});
+  const dates=Object.keys(byDate).sort((a,b)=>b.localeCompare(a));
+  const wrap=document.createElement('div');wrap.className='hist-date-list';
+  dates.forEach((date,di)=>{
+    const rows=byDate[date].slice().sort((a,b)=>a.time.localeCompare(b.time));
+    const bySh={};rows.forEach(o=>{bySh[o.shop]=(bySh[o.shop]||0)+1});
+    const chips=Object.entries(bySh).map(([s,c])=>`<div class="hist-chip">${s} <span>${c}件</span></div>`).join('');
+    const row=document.createElement('div');row.className='hist-date-row';
+    row.innerHTML=`
+      <div class="hist-date-header" onclick="toggleHist(this)">
+        <div><div class="hist-date-title">${date}（${wd(date)}）</div><div class="hist-date-meta">計 ${rows.length} 件</div></div>
+        <div class="hist-chevron ${di===0?'open':''}">▼</div>
+      </div>
+      <div class="hist-date-body ${di===0?'open':''}" >
+        <div class="hist-summary-row">${chips}</div>
+        <table class="hist-table">
+          <thead><tr><th>氏名</th><th>注文先</th><th>時刻</th><th>備考</th></tr></thead>
+          <tbody>${rows.map(o=>`<tr>
+            <td>${o.name}</td>
+            <td><span class="shop-tag ${shopTagClass(o.shop)}">${o.shop}</span></td>
+            <td style="white-space:nowrap;font-size:12px">${o.time}${o.late?'<br><span style="font-size:10px;color:var(--red-dark)">締切後</span>':''}</td>
+            <td style="font-size:12px;color:var(--text3)">${o.note||'—'}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>`;
+    wrap.appendChild(row);
+  });
+  container.appendChild(wrap);
+}
+
+function toggleHist(header){
+  const row=header.parentElement;
+  const body=row.querySelector('.hist-date-body');
+  const chev=row.querySelector('.hist-chevron');
+  const open=body.classList.toggle('open');
+  chev.classList.toggle('open',open);
+}
+
+function orderCard(o){
+  const div=document.createElement('div');div.className='order-item';
+  let badge=o.contacted?'<span class="badge badge-done">連絡済</span>':o.late?'<span class="badge badge-late">締切後</span>':'<span class="badge badge-pending">未連絡</span>';
+  const mb=o.contacted?'':`<button class="mark-btn" onclick="markContacted(${o.id})">連絡済にする</button>`;
+  div.innerHTML=`<div class="order-header"><span class="order-person">${o.name}</span>${badge}</div><div class="order-shop-label">${o.shop}</div>${o.note?`<div class="order-note-text">備考：${o.note}</div>`:''}<div class="order-meta"><span class="order-time-small">${o.date} ${o.time}</span>${mb}</div>`;
+  return div;
+}
+function markContacted(id){const o=orders.find(x=>x.id===id);if(o){o.contacted=true;save();renderAdmin()}}
+function showTab(tab){
+  ['today','history'].forEach(t=>{document.getElementById('tab-'+t).classList.toggle('active',t===tab);document.getElementById('admin-'+t).style.display=t===tab?'block':'none'});
+}
+</script>
+</body>
+</html>
