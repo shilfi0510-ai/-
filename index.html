@@ -320,6 +320,23 @@ textarea:focus{border-color:var(--warm)}
   <button class="menu-img-modal-close" onclick="closeMenuModal()">✕</button>
   <img id="menu-modal-img" src="" alt="メニュー拡大"/>
 </div>
+
+<script type="module">
+// ---- FIREBASE ----
+import{initializeApp}from'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
+import{getFirestore,collection,addDoc,onSnapshot,doc,updateDoc,query,orderBy,getDocs,setDoc,getDoc}from'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
+
+const firebaseConfig={
+  apiKey:"AIzaSyAicsbopkHmMoPZVOXXyV605Vj1DMOpVbU",
+  authDomain:"bento-order-7ffb3.firebaseapp.com",
+  projectId:"bento-order-7ffb3",
+  storageBucket:"bento-order-7ffb3.firebasestorage.app",
+  messagingSenderId:"22963508612",
+  appId:"1:22963508612:web:a55e1e7edd0f5a281e79d1"
+};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
 // ---- DATA ----
 const MEMBERS=[
   {name:'岩元',ext:'84550',admin:false},{name:'森田',ext:'84560',admin:false},
@@ -416,10 +433,61 @@ const SHOPS=[
 ];
 
 let currentUser=null,selShopId=null,selMenuId=null,selOpts=[],selDate=null;
-let orders=JSON.parse(localStorage.getItem('bento_v5')||'[]');
-let menuUrls=JSON.parse(localStorage.getItem('bento_v5_menuUrls')||'{}');
-function save(){localStorage.setItem('bento_v5',JSON.stringify(orders))}
-function saveMenuUrls(){localStorage.setItem('bento_v5_menuUrls',JSON.stringify(menuUrls))}
+let orders=[];
+let menuUrls={};
+
+// エラー通知
+function showFirebaseError(msg){
+  const existing=document.getElementById('fb-error-banner');
+  if(existing)return;
+  const b=document.createElement('div');
+  b.id='fb-error-banner';
+  b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:999;background:#E24B4A;color:#fff;font-size:13px;padding:10px 16px;text-align:center;line-height:1.6';
+  b.innerHTML=`⚠️ ${msg}<br><span style="font-size:11px">管理者（田中望 内線84587）にご連絡ください</span>`;
+  document.body.prepend(b);
+}
+
+// 注文保存
+async function save(order){
+  try{
+    await addDoc(collection(db,'orders'),order);
+  }catch(e){
+    console.error(e);
+    showFirebaseError('注文の送信に失敗しました。');
+    throw e;
+  }
+}
+
+// 連絡済み更新
+async function saveContacted(docId){
+  try{
+    await updateDoc(doc(db,'orders',docId),{contacted:true});
+  }catch(e){
+    console.error(e);
+    showFirebaseError('更新に失敗しました。');
+  }
+}
+
+// メニュー画像保存
+async function saveMenuUrls(){
+  try{
+    await setDoc(doc(db,'settings','menuUrls'),menuUrls);
+  }catch(e){
+    console.error(e);
+    showFirebaseError('画像の保存に失敗しました。');
+  }
+}
+
+// メニュー画像読み込み
+async function loadMenuUrls(){
+  try{
+    const snap=await getDoc(doc(db,'settings','menuUrls'));
+    if(snap.exists())menuUrls=snap.data();
+    buildShopList();
+  }catch(e){
+    console.error(e);
+  }
+}
 
 function fmt(d){return`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`}
 function parseDate(s){return new Date(s.replace(/\//g,'-')+'T00:00:00')}
@@ -428,12 +496,11 @@ function wd(s){return['日','月','火','水','木','金','土'][parseDate(s).ge
 function getDateOptions(){
   const today=new Date();today.setHours(0,0,0,0);
   const opts=[];
-  for(let i=-1;i<=3;i++){
+  for(let i=0;i<=3;i++){
     const d=new Date(today);d.setDate(today.getDate()+i);
     const s=fmt(d);
     let label='';
-    if(i===-1)label='前日分';
-    else if(i===0)label='今日分';
+    if(i===0)label='今日分';
     else if(i===1)label='明日分';
     else label=`${i}日後分`;
     opts.push({date:s,label,wd:wd(s)});
@@ -560,14 +627,13 @@ function toggleOpt(e,opt){
   else{selOpts.push(opt);el.classList.add('sel')}
 }
 
-function submitOrder(){
+async function submitOrder(){
   if(!selDate){alert('注文対象日を選んでください');return}
   if(!selShopId){alert('注文先を選んでください');return}
   if(!selMenuId){alert('メニューを選んでください');return}
   const shop=SHOPS.find(s=>s.id===selShopId);
   const menu=shop.menus.find(m=>m.id===selMenuId);
   const note=document.getElementById('ord-note').value.trim();
-  // 「その他」メニューの場合は金額を取得
   let menuPrice=menu.price;
   if(selMenuId==='other'){
     const pv=document.getElementById('other-price-input').value.trim();
@@ -575,7 +641,6 @@ function submitOrder(){
   }
   const now=new Date();
   const o={
-    id:Date.now(),
     name:currentUser.name,ext:currentUser.ext,
     orderDate:selDate,
     registeredAt:fmt(now),
@@ -583,10 +648,19 @@ function submitOrder(){
     shopId:selShopId,shopName:shop.name,
     menuId:selMenuId,menuName:menu.name,menuPrice,
     opts:selOpts.slice(),
-    note,contacted:false
+    note,contacted:false,
+    createdAt:Date.now()
   };
-  orders.push(o);save();
-  showSuccess(o);
+  const btn=document.querySelector('#ord-form .btn-p');
+  if(btn){btn.disabled=true;btn.textContent='送信中...';}
+  try{
+    await save(o);
+    showSuccess(o);
+  }catch(e){
+    // エラーバナーはsave()内で表示済み
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='注文する';}
+  }
 }
 
 function showSuccess(o){
@@ -685,7 +759,7 @@ function renderAdminOrders(){
 function makeOrderCard(o){
   const div=document.createElement('div');div.className='order-item';
   const badge=o.contacted?'<span class="badge b-done">連絡済</span>':'<span class="badge b-pend">未連絡</span>';
-  const mb=o.contacted?'':`<button class="mark-btn" onclick="markContacted(${o.id})">連絡済にする</button>`;
+  const mb=o.contacted?'':`<button class="mark-btn" onclick="markContacted('${o.docId}')">連絡済にする</button>`;
   const opts=o.opts&&o.opts.length?`<div class="oi-note">オプション：${o.opts.join('、')}</div>`:'';
   const note=o.note?`<div class="oi-note">備考：${o.note}</div>`:'';
   div.innerHTML=`
@@ -696,9 +770,8 @@ function makeOrderCard(o){
   return div;
 }
 
-function markContacted(id){
-  const o=orders.find(x=>x.id===id);
-  if(o){o.contacted=true;save();renderAdminOrders()}
+function markContacted(docId){
+  saveContacted(docId);
 }
 
 function renderAdminHistory(){
@@ -807,22 +880,22 @@ function onFileSelect(shopId, input){
   reader.readAsDataURL(file);
 }
 
-function saveMenuImg(shopId){
+async function saveMenuImg(shopId){
   const b64=pendingImgs[shopId];
   if(!b64){alert('画像が選択されていません');return}
   menuUrls[shopId]=b64;
   delete pendingImgs[shopId];
-  saveMenuUrls();
+  await saveMenuUrls();
   buildShopList();
   renderAdminMenu();
   alert('メニュー画像を保存しました。注文画面に画像が表示されます。');
 }
 
-function clearMenuImg(shopId){
+async function clearMenuImg(shopId){
   if(!confirm(`${SHOPS.find(s=>s.id===shopId).name} のメニュー画像を削除しますか？`)){return}
   delete menuUrls[shopId];
   delete pendingImgs[shopId];
-  saveMenuUrls();
+  await saveMenuUrls();
   buildShopList();
   renderAdminMenu();
 }
@@ -845,25 +918,20 @@ function closeMenuModal(){
   const sel=document.getElementById('ln-name');
   MEMBERS.forEach(m=>{const o=document.createElement('option');o.value=m.name;o.textContent=m.name+(m.admin?' （管理者）':'');sel.appendChild(o)});
   buildDateButtons();
-  buildShopList();
-
-  // デモデータ
-  const demos=['2026/03/20','2026/03/19'];
-  if(!orders.some(o=>demos.includes(o.orderDate))){
-    const dm=[
-      {name:'森田',shopId:'takumi',shopName:'匠（たくみ）',menuId:'delux',menuName:'デラックス日替わり',menuPrice:'600円',opts:['ご飯大盛り（無料）'],note:''},
-      {name:'春木',shopId:'coco',shopName:'手作り弁当COCO',menuId:'hika',menuName:'日替わり',menuPrice:'550円',opts:[],note:''},
-      {name:'足立',shopId:'takumi',shopName:'匠（たくみ）',menuId:'healthy',menuName:'ヘルシー日替わり',menuPrice:'500円',opts:[],note:''},
-      {name:'辻野',shopId:'katsu',shopName:'勝美屋（かつみや）',menuId:'free',menuName:'メニュー指定',menuPrice:'350円〜',opts:[],note:'のり弁当'},
-      {name:'西谷',shopId:'ippou',shopName:'一芳亭（いっぽうてい）',menuId:'hika',menuName:'日替わり',menuPrice:'650円',opts:[],note:''},
-    ];
-    demos.forEach((date,di)=>{
-      dm.slice(0,3+di).forEach((d,i)=>{
-        orders.push({id:Date.now()+Math.random(),name:d.name,ext:'00000',orderDate:date,registeredAt:date,time:`09:${String(15+i*5).padStart(2,'0')}`,shopId:d.shopId,shopName:d.shopName,menuId:d.menuId,menuName:d.menuName,menuPrice:d.menuPrice,opts:d.opts,note:d.note,contacted:i>1});
-      });
-    });
-    save();
-  }
+  // メニュー画像をFirestoreから読み込んでから店舗リスト構築
+  loadMenuUrls();
+  // 注文データをリアルタイム監視
+  const q=query(collection(db,'orders'),orderBy('createdAt','asc'));
+  onSnapshot(q,snap=>{
+    orders=snap.docs.map(d=>({...d.data(),docId:d.id}));
+    if(currentUser&&currentUser.admin){
+      renderAdminOrders();
+      buildAdminDateSel();
+    }
+  },err=>{
+    console.error(err);
+    showFirebaseError('データの読み込みに失敗しました。');
+  });
 })();
 
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
@@ -889,6 +957,25 @@ function doLogin(){
 }
 
 function doLogout(){currentUser=null;selShopId=null;selMenuId=null;selOpts=[];selDate=null;document.getElementById('ln-name').value='';document.getElementById('ln-pass').value='';document.getElementById('ln-err').style.display='none';show('scr-login')}
+
+// onclick属性から呼べるようにwindowに公開
+window.doLogin=doLogin;
+window.doLogout=doLogout;
+window.selectShop=selectShop;
+window.selectMenu=selectMenu;
+window.toggleOpt=toggleOpt;
+window.submitOrder=submitOrder;
+window.resetOrder=resetOrder;
+window.selectDateCustom=selectDateCustom;
+window.showATab=showATab;
+window.markContacted=markContacted;
+window.toggleHist=toggleHist;
+window.renderAdminOrders=renderAdminOrders;
+window.onFileSelect=onFileSelect;
+window.saveMenuImg=saveMenuImg;
+window.clearMenuImg=clearMenuImg;
+window.openMenuModal=openMenuModal;
+window.closeMenuModal=closeMenuModal;
 </script>
 </body>
 </html>
