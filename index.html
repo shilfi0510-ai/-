@@ -306,7 +306,7 @@ textarea:focus{border-color:var(--warm)}
   </div>
   <div id="adm-menu" style="display:none">
     <div style="font-size:12px;color:var(--tx2);margin-bottom:12px;padding:10px 13px;background:var(--blue-l);border:1px solid var(--blue-b);border-radius:var(--rs);line-height:1.7">
-      各店舗のメニュー画像をアップロードしてください。<br>JPEG・PNG・GIF形式（目安：5MB以下）に対応しています。<br>登録後は注文画面の各店舗カードにメニュー画像が表示されます。
+      各店舗のメニュー画像をアップロードしてください。<br>JPEG・PNG・GIF形式、<strong>200KB以下</strong>を目安にしてください。<br>登録後は注文画面の各店舗カードにメニュー画像が表示されます。
     </div>
     <div id="adm-menu-list"></div>
   </div>
@@ -324,7 +324,7 @@ textarea:focus{border-color:var(--warm)}
 <script type="module">
 // ---- FIREBASE ----
 import{initializeApp}from'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
-import{getFirestore,collection,addDoc,onSnapshot,doc,updateDoc,query,orderBy,getDocs,setDoc,getDoc}from'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
+import{getFirestore,collection,addDoc,onSnapshot,doc,updateDoc,query,orderBy,getDocs,setDoc,getDoc,deleteDoc,writeBatch,where}from'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
 
 const firebaseConfig={
   apiKey:"AIzaSyAicsbopkHmMoPZVOXXyV605Vj1DMOpVbU",
@@ -486,6 +486,29 @@ async function loadMenuUrls(){
     buildShopList();
   }catch(e){
     console.error(e);
+  }
+}
+
+// 2年以上前の注文データを削除（管理者確認あり）
+async function autoCleanOldOrders(){
+  try{
+    const limit=new Date();
+    limit.setFullYear(limit.getFullYear()-2);
+    const limitStr=fmt(limit);
+    const q=query(collection(db,'orders'),where('orderDate','<',limitStr));
+    const snap=await getDocs(q);
+    if(snap.empty)return;
+    const oldest=snap.docs.map(d=>d.data().orderDate).sort()[0];
+    const confirmed=confirm(
+      `【古いデータの削除確認】\n\n${snap.size}件の注文データ（${oldest}以前）が2年以上経過しています。\n\n削除してもよろしいですか？\n※この操作は取り消せません`
+    );
+    if(!confirmed)return;
+    const batch=writeBatch(db);
+    snap.docs.forEach(d=>batch.delete(d.ref));
+    await batch.commit();
+    alert(`${snap.size}件の古い注文データを削除しました。`);
+  }catch(e){
+    console.error('自動削除エラー:',e);
   }
 }
 
@@ -861,7 +884,7 @@ const pendingImgs={};
 function onFileSelect(shopId, input){
   const file=input.files[0];
   if(!file)return;
-  if(file.size>8*1024*1024){alert('ファイルサイズが大きすぎます（目安：5MB以下）');input.value='';return}
+  if(file.size>200*1024){alert('ファイルサイズが大きすぎます。200KB以下の画像を使用してください。\n\n【圧縮方法の目安】\n・Windowsのペイントで「名前を付けて保存」→JPEGで保存\n・スマホの場合は圧縮アプリをご利用ください');input.value='';return}
   const reader=new FileReader();
   reader.onload=function(e){
     const b64=e.target.result;
@@ -946,6 +969,7 @@ function doLogin(){
     document.getElementById('adm-namebar').textContent=m.name+' ('+m.ext+')';
     buildAdminDateSel();
     renderAdminOrders();
+    autoCleanOldOrders();
     show('scr-admin');
   } else {
     document.getElementById('ord-uname').textContent=m.name+' さん';
