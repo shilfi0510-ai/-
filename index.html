@@ -30,7 +30,7 @@ html,body{height:100%;font-family:'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ
 .wrap{max-width:500px;margin:0 auto;padding:14px}
 .scr{display:none}.scr.active{display:block}
 
-/* ---- LOGIN ---- */
+/* LOGIN */
 .login-top{text-align:center;padding:24px 0 16px}
 .login-top .ico{font-size:44px;margin-bottom:10px}
 .login-top h2{font-size:19px;font-weight:600;margin-bottom:5px}
@@ -46,16 +46,33 @@ html,body{height:100%;font-family:'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ
 .btn-p{background:var(--warm);color:#fff}
 .btn-p:hover{background:var(--warm-h)}
 .btn-s{background:var(--sur2);color:var(--tx);border:1px solid var(--bd);margin-top:9px}
+.btn-s2{background:var(--blue-l);color:var(--blue-d);border:1px solid var(--blue-b);margin-top:9px}
 .err-msg{font-size:13px;color:var(--red-d);margin-top:9px;padding:9px 12px;background:var(--red-l);border-radius:var(--rs);display:none}
 
-/* ---- USER BAR ---- */
+/* TOP PAGE */
+.top-welcome{text-align:center;padding:20px 0 16px}
+.top-welcome .ico{font-size:40px;margin-bottom:8px}
+.top-welcome h2{font-size:18px;font-weight:600;margin-bottom:4px}
+.top-welcome p{font-size:13px;color:var(--tx2)}
+.top-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px}
+.top-menu-card{background:var(--sur);border:1.5px solid var(--bd);border-radius:var(--r);padding:18px 12px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.top-menu-card:active{opacity:.88}
+.top-menu-card:hover{border-color:var(--warm);background:var(--warm-l)}
+.top-menu-card .tmc-ico{font-size:28px;margin-bottom:8px}
+.top-menu-card .tmc-label{font-size:14px;font-weight:600;color:var(--tx)}
+.top-menu-card .tmc-sub{font-size:11px;color:var(--tx3);margin-top:3px}
+.top-menu-card.admin-card{border-color:var(--blue-b);background:var(--blue-l)}
+.top-menu-card.admin-card:hover{border-color:var(--blue-d);background:#d5e8f8}
+.top-menu-card.admin-card .tmc-label{color:var(--blue-d)}
 .ubar{background:var(--sur2);border-radius:var(--rs);padding:9px 13px;margin-bottom:13px;display:flex;align-items:center;justify-content:space-between}
 .ubar-name{font-size:14px;font-weight:600;color:var(--tx)}
 .ubar-ext{font-size:11px;color:var(--tx3);margin-top:1px}
 .logout{font-size:12px;color:var(--tx3);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px}
 .logout:hover{background:var(--bd)}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);background:none;border:none;cursor:pointer;padding:4px 0;margin-bottom:10px}
+.back-btn:active{opacity:.7}
 
-/* ---- DATE PICKER ---- */
+/* DATE PICKER */
 .date-pick{background:var(--sur);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin-bottom:13px}
 .date-pick-label{font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:8px}
 .date-btns{display:flex;gap:7px;flex-wrap:wrap}
@@ -67,7 +84,7 @@ html,body{height:100%;font-family:'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ
 .date-custom{margin-top:9px;display:none}
 .date-custom.show{display:block}
 
-/* ---- SHOP CARDS ---- */
+/* SHOP CARDS */
 .sec-title{font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:8px}
 .shop-list{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
 .shop-card{background:var(--sur);border:1.5px solid var(--bd);border-radius:var(--r);overflow:hidden;cursor:pointer}
@@ -93,16 +110,29 @@ html,body{height:100%;font-family:'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ
 .menu-btn.sel .price{color:var(--warm)}
 .shop-note{font-size:11px;color:var(--tx3);margin-bottom:8px;line-height:1.6}
 
-/* ---- OPTION TAGS ---- */
+/* OPTION TAGS */
 .opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
 .opt-tag{padding:5px 11px;border:1px solid var(--bd);border-radius:20px;font-size:12px;cursor:pointer;background:var(--sur);color:var(--tx)}
 .opt-tag.sel{background:var(--warm);border-color:var(--warm);color:#fff;font-weight:500}
 
-/* ---- NOTE ---- */
+/* NOTE */
 textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:13px;background:var(--sur);color:var(--tx);resize:none;height:66px;outline:none;font-family:inherit}
 textarea:focus{border-color:var(--warm)}
 
-/* ---- SUCCESS ---- */
+/* 価格・入金・おつり */
+.payment-box{background:var(--sur);border:1px solid var(--bd);border-radius:var(--r);padding:13px 14px;margin-bottom:13px}
+.payment-box-title{font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:10px}
+.payment-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.payment-row label{font-size:12px;color:var(--tx2);width:60px;flex-shrink:0}
+.payment-row input{flex:1;padding:9px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:15px;background:var(--sur);color:var(--tx);outline:none}
+.payment-row input:focus{border-color:var(--warm)}
+.payment-row input[readonly]{background:var(--sur2);color:var(--tx2)}
+.payment-row .yen{font-size:14px;color:var(--tx2);font-weight:500}
+.change-display{background:var(--amber-l);border:1px solid var(--amber-b);border-radius:var(--rs);padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.change-display .cd-label{font-size:13px;color:var(--amber-d);font-weight:500}
+.change-display .cd-val{font-size:20px;font-weight:700;color:var(--amber-d)}
+
+/* SUCCESS */
 .suc-card{border-radius:var(--r);padding:20px;text-align:center;margin-bottom:13px}
 .suc-card.ok{background:var(--green-l);border:1px solid var(--green-b)}
 .suc-card .ico{font-size:34px;margin-bottom:8px}
@@ -113,7 +143,18 @@ textarea:focus{border-color:var(--warm)}
 .suc-detail-row .k{color:var(--tx2)}
 .suc-detail-row .v{font-weight:500;color:var(--tx)}
 
-/* ---- ADMIN ---- */
+/* 自分の注文履歴 */
+.my-hist-item{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 13px;margin-bottom:9px}
+.my-hist-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
+.my-hist-date{font-size:13px;font-weight:600;color:var(--tx)}
+.my-hist-shop{font-size:12px;color:var(--warm);font-weight:500;margin-bottom:2px}
+.my-hist-menu{font-size:13px;color:var(--tx);margin-bottom:3px}
+.my-hist-meta{font-size:11px;color:var(--tx3)}
+.edit-btn{font-size:12px;padding:4px 12px;border:1px solid var(--warm);border-radius:6px;cursor:pointer;background:var(--warm-l);color:var(--warm-h);font-weight:500;white-space:nowrap}
+.edit-btn:disabled{border-color:var(--bd);background:var(--sur2);color:var(--tx3);cursor:not-allowed}
+.change-log{margin-top:6px;padding:6px 10px;background:var(--amber-l);border-radius:6px;font-size:11px;color:var(--amber-d)}
+
+/* ADMIN */
 .tab-bar{display:flex;background:var(--sur2);border:1px solid var(--bd);border-radius:var(--rs);overflow:hidden;margin-bottom:13px}
 .tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:500;cursor:pointer;background:transparent;border:none;color:var(--tx3)}
 .tab.active{background:var(--warm);color:#fff}
@@ -127,8 +168,6 @@ textarea:focus{border-color:var(--warm)}
 .chip-katsu{background:var(--warm-l);color:var(--warm-h)}
 .chip-hokka{background:#F0FDF4;color:#166534}
 .chip-other{background:var(--sur2);color:var(--tx2)}
-
-/* ---- ORDER GROUP ---- */
 .order-group{margin-bottom:14px}
 .order-group-title{font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;margin-bottom:7px;display:inline-block}
 .og-takumi{background:#FEF3E2;color:#92520A}
@@ -139,6 +178,8 @@ textarea:focus{border-color:var(--warm)}
 .oi-shop{font-size:13px;color:var(--warm);font-weight:500;margin-bottom:2px}
 .oi-menu{font-size:13px;color:var(--tx);margin-bottom:2px}
 .oi-note{font-size:12px;color:var(--tx3);margin-bottom:3px}
+.oi-payment{display:flex;gap:12px;font-size:12px;color:var(--tx2);margin-bottom:3px;flex-wrap:wrap}
+.oi-payment span{color:var(--tx);font-weight:500}
 .oi-meta{display:flex;align-items:center;justify-content:space-between;margin-top:5px}
 .oi-time{font-size:11px;color:var(--tx3)}
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
@@ -147,18 +188,21 @@ textarea:focus{border-color:var(--warm)}
 .mark-btn{font-size:12px;padding:4px 10px;border:1px solid var(--bd);border-radius:6px;cursor:pointer;background:var(--sur);color:var(--tx2)}
 .mark-btn:active{background:var(--sur2)}
 .empty{text-align:center;padding:32px 16px;color:var(--tx3);font-size:13px}
+.sum-total-box{background:var(--amber-l);border:1px solid var(--amber-b);border-radius:var(--rs);padding:10px 14px;margin-top:8px;display:flex;flex-wrap:wrap;gap:12px}
+.sum-total-item{font-size:13px;color:var(--amber-d)}
+.sum-total-item span{font-weight:700}
 
-/* ---- ADMIN DATE SELECT ---- */
+/* ADMIN DATE SELECT */
 .adm-date-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .adm-date-bar select{flex:1;padding:9px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;background:var(--sur);color:var(--tx);-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888780' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;outline:none}
 
-/* ---- SHOP INFO PANEL ---- */
+/* SHOP INFO PANEL */
 .shop-info-panel{background:var(--blue-l);border:1px solid var(--blue-b);border-radius:var(--rs);padding:10px 13px;margin-bottom:13px}
 .shop-info-panel h4{font-size:12px;font-weight:600;color:var(--blue-d);margin-bottom:6px}
 .shop-info-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:var(--tx2)}
 .shop-info-row span{color:var(--tx);font-weight:500}
 
-/* ---- MENU IMG ---- */
+/* MENU IMG */
 .adm-menu-row{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 14px;margin-bottom:8px}
 .adm-menu-row-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .adm-menu-name{font-size:14px;font-weight:600;color:var(--tx)}
@@ -178,7 +222,6 @@ textarea:focus{border-color:var(--warm)}
 .adm-menu-save:hover{background:var(--warm-h)}
 .adm-menu-save:disabled{background:var(--bd);cursor:not-allowed}
 .adm-menu-clear{padding:8px 12px;background:var(--sur2);color:var(--tx2);border:1px solid var(--bd);border-radius:var(--rs);font-size:12px;cursor:pointer}
-/* 注文画面 メニュー画像 */
 .menu-img-inline{width:100%;border-radius:var(--rs);margin-bottom:10px;display:block;border:1px solid var(--bd);cursor:pointer}
 .menu-img-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;padding:16px}
 .menu-img-modal.open{display:flex}
@@ -186,7 +229,7 @@ textarea:focus{border-color:var(--warm)}
 .menu-img-modal-close{position:fixed;top:14px;right:16px;font-size:26px;color:#fff;cursor:pointer;background:none;border:none;line-height:1}
 .menu-img-none{font-size:11px;color:var(--tx3);margin-bottom:10px}
 
-/* ---- HIST ---- */
+/* HIST */
 .hist-row{background:var(--sur);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:8px}
 .hist-head{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;cursor:pointer}
 .hist-head:active{background:var(--sur2)}
@@ -204,6 +247,14 @@ textarea:focus{border-color:var(--warm)}
 .hist-table td{padding:6px 5px;border-bottom:1px solid var(--bd);color:var(--tx);vertical-align:top}
 .hist-table tr:last-child td{border-bottom:none}
 .htag{display:inline-block;padding:2px 7px;border-radius:9px;font-size:10px;font-weight:600}
+
+/* 注文変更モーダル */
+.edit-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50;align-items:flex-end;justify-content:center}
+.edit-modal-overlay.open{display:flex}
+.edit-modal{background:var(--sur);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;padding:20px 18px 32px}
+.edit-modal-title{font-size:16px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.edit-modal-sub{font-size:12px;color:var(--tx3);margin-bottom:16px}
+.edit-modal-close{float:right;font-size:22px;color:var(--tx3);background:none;border:none;cursor:pointer;line-height:1;margin-top:-2px}
 </style>
 </head>
 <body>
@@ -229,6 +280,63 @@ textarea:focus{border-color:var(--warm)}
   </div>
 </div>
 
+<!-- TOP (一般社員) -->
+<div class="scr" id="scr-top">
+  <div class="ubar">
+    <div><div class="ubar-name" id="top-uname"></div><div class="ubar-ext" id="top-uext"></div></div>
+    <button class="logout" onclick="doLogout()">ログアウト</button>
+  </div>
+  <div class="top-welcome">
+    <div class="ico">🍱</div>
+    <h2 id="top-greeting"></h2>
+    <p>何をしますか？</p>
+  </div>
+  <div class="top-menu-grid">
+    <div class="top-menu-card" onclick="goOrder()">
+      <div class="tmc-ico">📝</div>
+      <div class="tmc-label">注文する</div>
+      <div class="tmc-sub">新しく注文を入れる</div>
+    </div>
+    <div class="top-menu-card" onclick="goMyHistory()">
+      <div class="tmc-ico">📋</div>
+      <div class="tmc-label">注文履歴</div>
+      <div class="tmc-sub">確認・変更</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP (管理者) -->
+<div class="scr" id="scr-top-admin">
+  <div class="ubar">
+    <div><div class="ubar-name" id="top-adm-uname"></div><div class="ubar-ext" id="top-adm-uext"></div></div>
+    <button class="logout" onclick="doLogout()">ログアウト</button>
+  </div>
+  <div class="top-welcome">
+    <div class="ico">🍱</div>
+    <h2 id="top-adm-greeting"></h2>
+    <p>何をしますか？</p>
+  </div>
+  <div class="top-menu-grid">
+    <div class="top-menu-card admin-card" onclick="goAdmin()">
+      <div class="tmc-ico">⚙️</div>
+      <div class="tmc-label">管理者画面</div>
+      <div class="tmc-sub">注文確認・設定</div>
+    </div>
+    <div class="top-menu-card" onclick="goOrder()">
+      <div class="tmc-ico">📝</div>
+      <div class="tmc-label">注文する</div>
+      <div class="tmc-sub">自分で注文を入れる</div>
+    </div>
+  </div>
+  <div style="margin-top:4px">
+    <div class="top-menu-card" style="grid-column:span 2" onclick="goMyHistory()">
+      <div class="tmc-ico">📋</div>
+      <div class="tmc-label">自分の注文履歴</div>
+      <div class="tmc-sub">確認・変更</div>
+    </div>
+  </div>
+</div>
+
 <!-- ORDER -->
 <div class="scr" id="scr-order">
   <div class="ubar">
@@ -243,11 +351,12 @@ textarea:focus{border-color:var(--warm)}
       <p id="suc-msg"></p>
       <div class="suc-detail" id="suc-detail"></div>
     </div>
-    <button class="btn btn-s" onclick="resetOrder()">注文をやり直す</button>
+    <button class="btn btn-p" onclick="goTopFromOrder()">トップに戻る</button>
+    <button class="btn btn-s" onclick="resetOrder()">続けて注文する</button>
   </div>
 
   <div id="ord-form">
-    <!-- 注文対象日 -->
+    <button class="back-btn" onclick="goTopFromOrder()">← トップに戻る</button>
     <div class="date-pick">
       <div class="date-pick-label">📅 注文対象日を選んでください</div>
       <div class="date-btns" id="date-btns"></div>
@@ -255,8 +364,6 @@ textarea:focus{border-color:var(--warm)}
         <input type="date" id="date-input" style="width:100%;padding:9px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;background:var(--sur);color:var(--tx);outline:none" onchange="selectDateCustom(this.value)"/>
       </div>
     </div>
-
-    <!-- 店舗案内 -->
     <div class="shop-info-panel">
       <h4>📋 各店舗の締切時刻</h4>
       <div class="shop-info-row">匠（たくみ）<span>当日 9:30まで　前日FAX可</span></div>
@@ -265,22 +372,40 @@ textarea:focus{border-color:var(--warm)}
       <div class="shop-info-row">勝美屋<span>当日 10:30まで（11:00頃まで応相談）</span></div>
       <div class="shop-info-row">ほっかほっか亭<span>当日 10:30まで（11:00頃まで応相談）</span></div>
     </div>
-
     <div class="sec-title">注文先を選んでください</div>
     <div class="shop-list" id="shop-list"></div>
-
-    <div id="other-price-row" style="display:none;margin-bottom:13px">
-      <div class="sec-title">金額（任意）</div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <input type="number" id="other-price-input" placeholder="例：650" inputmode="numeric" style="flex:1;padding:10px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:15px;background:var(--sur);color:var(--tx);outline:none" onfocus="this.style.borderColor='var(--warm)'" onblur="this.style.borderColor='var(--bd)'"/>
-        <span style="font-size:14px;color:var(--tx2);font-weight:500">円</span>
+    <div class="payment-box">
+      <div class="payment-box-title">💴 お支払い</div>
+      <div class="payment-row">
+        <label>価格</label>
+        <input type="number" id="pay-price" inputmode="numeric" placeholder="自動入力または手入力" oninput="calcChange()"/>
+        <span class="yen">円</span>
+      </div>
+      <div class="payment-row">
+        <label>入金額</label>
+        <input type="number" id="pay-paid" inputmode="numeric" placeholder="支払う金額を入力" oninput="calcChange()"/>
+        <span class="yen">円</span>
+      </div>
+      <div class="change-display" id="change-display" style="display:none">
+        <span class="cd-label">おつり</span>
+        <span class="cd-val" id="change-val">—</span>
       </div>
     </div>
-
     <div class="sec-title" style="margin-top:2px">備考（任意）</div>
     <div style="margin-bottom:16px"><textarea id="ord-note" placeholder="アレルギー・その他ご希望などあれば"></textarea></div>
     <button class="btn btn-p" onclick="submitOrder()">注文する</button>
   </div>
+</div>
+
+<!-- 自分の注文履歴 -->
+<div class="scr" id="scr-my-hist">
+  <div class="ubar">
+    <div><div class="ubar-name" id="mh-uname"></div><div class="ubar-ext" id="mh-uext"></div></div>
+    <button class="logout" onclick="doLogout()">ログアウト</button>
+  </div>
+  <button class="back-btn" onclick="goTopFromOrder()">← トップに戻る</button>
+  <div class="sec-title">自分の注文履歴</div>
+  <div id="my-hist-list"></div>
 </div>
 
 <!-- ADMIN -->
@@ -289,6 +414,7 @@ textarea:focus{border-color:var(--warm)}
     <div><div class="ubar-name">管理者画面</div><div class="ubar-ext" id="adm-namebar"></div></div>
     <button class="logout" onclick="doLogout()">ログアウト</button>
   </div>
+  <button class="back-btn" onclick="show('scr-top-admin')">← トップに戻る</button>
   <div class="tab-bar">
     <button class="tab active" id="atab-today" onclick="showATab('today')">注文確認</button>
     <button class="tab" id="atab-history" onclick="showATab('history')">日別履歴</button>
@@ -321,8 +447,17 @@ textarea:focus{border-color:var(--warm)}
   <img id="menu-modal-img" src="" alt="メニュー拡大"/>
 </div>
 
+<!-- 注文変更モーダル -->
+<div class="edit-modal-overlay" id="edit-modal-overlay" onclick="closeEditModal(event)">
+  <div class="edit-modal" id="edit-modal">
+    <button class="edit-modal-close" onclick="closeEditModal()">✕</button>
+    <div class="edit-modal-title">注文を変更する</div>
+    <div class="edit-modal-sub" id="edit-modal-sub"></div>
+    <div id="edit-modal-body"></div>
+  </div>
+</div>
+
 <script type="module">
-// ---- FIREBASE ----
 import{initializeApp}from'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
 import{getFirestore,collection,addDoc,onSnapshot,doc,updateDoc,query,orderBy,getDocs,setDoc,getDoc,deleteDoc,writeBatch,where}from'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
 
@@ -356,87 +491,31 @@ const MEMBERS=[
 ];
 
 const SHOPS=[
-  {
-    id:'takumi',name:'匠（たくみ）',
-    tel:'（仮）000-0000-0000',fax:'（仮）000-0000-0000',
-    deadline:'当日 9:30まで',dlClass:'dl-early',
-    note:'前日までにFAXでの注文も可能',
-    tag:'chip-takumi',htag:'chip-takumi',
-    menus:[
-      {id:'healthy',name:'ヘルシー日替わり',price:'500円'},
-      {id:'delux',name:'デラックス日替わり',price:'600円'},
-      {id:'other',name:'その他',price:'備考に記入'},
-    ],
-    options:['ご飯大盛り（無料）'],
-  },
-  {
-    id:'coco',name:'手作り弁当COCO',
-    tel:'（仮）000-0000-0000',fax:null,
-    deadline:'当日 10:30まで',dlClass:'dl-ok',
-    note:'',
-    tag:'chip-coco',htag:'chip-coco',
-    menus:[
-      {id:'hika',name:'日替わり',price:'550円'},
-      {id:'small',name:'ご飯小',price:'500円'},
-      {id:'mini',name:'ミニ',price:'450円'},
-      {id:'other',name:'その他',price:'備考に記入'},
-    ],
-    options:[],
-  },
-  {
-    id:'ippou',name:'一芳亭（いっぽうてい）',
-    tel:'（仮）000-0000-0000',fax:null,
-    deadline:'当日 10:30まで',dlClass:'dl-ok',
-    note:'',
-    tag:'chip-ippou',htag:'chip-ippou',
-    menus:[
-      {id:'hika',name:'日替わり',price:'650円'},
-      {id:'other',name:'その他',price:'備考に記入'},
-    ],
-    options:[],
-  },
-  {
-    id:'katsu',name:'勝美屋（かつみや）',
-    tel:'（仮）000-0000-0000',fax:'（仮）000-0000-0000',
-    deadline:'当日 10:30まで',dlClass:'dl-ok',
-    note:'11:00頃まで受けてもらえる場合あり',
-    tag:'chip-katsu',htag:'chip-katsu',
-    menus:[
-      {id:'free',name:'メニュー指定',price:'350円〜'},
-      {id:'other',name:'その他',price:'備考に記入'},
-    ],
-    options:[],
-  },
-  {
-    id:'hokka',name:'ほっかほっか亭 貝塚半田店',
-    tel:'（仮）000-0000-0000',fax:null,
-    deadline:'当日 10:30まで',dlClass:'dl-ok',
-    note:'11:00頃まで受けてもらえる場合あり',
-    tag:'chip-hokka',htag:'chip-hokka',
-    menus:[
-      {id:'free',name:'メニュー指定',price:'各種'},
-      {id:'other',name:'その他',price:'備考に記入'},
-    ],
-    options:[],
-  },
-  {
-    id:'other',name:'その他',
-    tel:null,fax:null,
-    deadline:'—',dlClass:'dl-ok',
-    note:'',
-    tag:'chip-other',htag:'chip-other',
-    menus:[
-      {id:'free',name:'自由記入',price:'備考に記入'},
-    ],
-    options:[],
-  },
+  {id:'takumi',name:'匠（たくみ）',tel:'（仮）000-0000-0000',fax:'（仮）000-0000-0000',deadline:'当日 9:30まで',dlClass:'dl-early',note:'前日までにFAXでの注文も可能',tag:'chip-takumi',htag:'chip-takumi',
+    menus:[{id:'healthy',name:'ヘルシー日替わり',price:'500円',priceNum:500},{id:'delux',name:'デラックス日替わり',price:'600円',priceNum:600},{id:'other',name:'その他',price:'',priceNum:null}],
+    options:['ご飯大盛り（無料）']},
+  {id:'coco',name:'手作り弁当COCO',tel:'（仮）000-0000-0000',fax:null,deadline:'当日 10:30まで',dlClass:'dl-ok',note:'',tag:'chip-coco',htag:'chip-coco',
+    menus:[{id:'hika',name:'日替わり',price:'550円',priceNum:550},{id:'small',name:'ご飯小',price:'500円',priceNum:500},{id:'mini',name:'ミニ',price:'450円',priceNum:450},{id:'other',name:'その他',price:'',priceNum:null}],
+    options:[]},
+  {id:'ippou',name:'一芳亭（いっぽうてい）',tel:'（仮）000-0000-0000',fax:null,deadline:'当日 10:30まで',dlClass:'dl-ok',note:'',tag:'chip-ippou',htag:'chip-ippou',
+    menus:[{id:'hika',name:'日替わり',price:'650円',priceNum:650},{id:'other',name:'その他',price:'',priceNum:null}],
+    options:[]},
+  {id:'katsu',name:'勝美屋（かつみや）',tel:'（仮）000-0000-0000',fax:'（仮）000-0000-0000',deadline:'当日 10:30まで',dlClass:'dl-ok',note:'11:00頃まで受けてもらえる場合あり',tag:'chip-katsu',htag:'chip-katsu',
+    menus:[{id:'free',name:'メニュー指定',price:'350円〜',priceNum:null},{id:'other',name:'その他',price:'',priceNum:null}],
+    options:[]},
+  {id:'hokka',name:'ほっかほっか亭 貝塚半田店',tel:'（仮）000-0000-0000',fax:null,deadline:'当日 10:30まで',dlClass:'dl-ok',note:'11:00頃まで受けてもらえる場合あり',tag:'chip-hokka',htag:'chip-hokka',
+    menus:[{id:'free',name:'メニュー指定',price:'各種',priceNum:null},{id:'other',name:'その他',price:'',priceNum:null}],
+    options:[]},
+  {id:'other',name:'その他',tel:null,fax:null,deadline:'—',dlClass:'dl-ok',note:'',tag:'chip-other',htag:'chip-other',
+    menus:[{id:'free',name:'自由記入',price:'',priceNum:null}],
+    options:[]},
 ];
 
 let currentUser=null,selShopId=null,selMenuId=null,selOpts=[],selDate=null;
 let orders=[];
 let menuUrls={};
+let editingDocId=null;
 
-// エラー通知
 function showFirebaseError(msg){
   const existing=document.getElementById('fb-error-banner');
   if(existing)return;
@@ -447,69 +526,37 @@ function showFirebaseError(msg){
   document.body.prepend(b);
 }
 
-// 注文保存
-async function save(order){
-  try{
-    await addDoc(collection(db,'orders'),order);
-  }catch(e){
-    console.error(e);
-    showFirebaseError('注文の送信に失敗しました。');
-    throw e;
-  }
+async function saveOrder(order){
+  try{return await addDoc(collection(db,'orders'),order)}
+  catch(e){console.error(e);showFirebaseError('注文の送信に失敗しました。');throw e}
 }
-
-// 連絡済み更新
-async function saveContacted(docId){
-  try{
-    await updateDoc(doc(db,'orders',docId),{contacted:true});
-  }catch(e){
-    console.error(e);
-    showFirebaseError('更新に失敗しました。');
-  }
+async function updateOrder(docId,data){
+  try{await updateDoc(doc(db,'orders',docId),data)}
+  catch(e){console.error(e);showFirebaseError('更新に失敗しました。')}
 }
-
-// メニュー画像保存
 async function saveMenuUrls(){
-  try{
-    await setDoc(doc(db,'settings','menuUrls'),menuUrls);
-  }catch(e){
-    console.error(e);
-    showFirebaseError('画像の保存に失敗しました。');
-  }
+  try{await setDoc(doc(db,'settings','menuUrls'),menuUrls)}
+  catch(e){console.error(e);showFirebaseError('画像の保存に失敗しました。')}
 }
-
-// メニュー画像読み込み
 async function loadMenuUrls(){
-  try{
-    const snap=await getDoc(doc(db,'settings','menuUrls'));
-    if(snap.exists())menuUrls=snap.data();
-    buildShopList();
-  }catch(e){
-    console.error(e);
-  }
+  try{const snap=await getDoc(doc(db,'settings','menuUrls'));if(snap.exists())menuUrls=snap.data();buildShopList()}
+  catch(e){console.error(e)}
 }
-
-// 2年以上前の注文データを削除（管理者確認あり）
 async function autoCleanOldOrders(){
   try{
-    const limit=new Date();
-    limit.setFullYear(limit.getFullYear()-2);
+    const limit=new Date();limit.setFullYear(limit.getFullYear()-2);
     const limitStr=fmt(limit);
     const q=query(collection(db,'orders'),where('orderDate','<',limitStr));
     const snap=await getDocs(q);
     if(snap.empty)return;
     const oldest=snap.docs.map(d=>d.data().orderDate).sort()[0];
-    const confirmed=confirm(
-      `【古いデータの削除確認】\n\n${snap.size}件の注文データ（${oldest}以前）が2年以上経過しています。\n\n削除してもよろしいですか？\n※この操作は取り消せません`
-    );
+    const confirmed=confirm(`【古いデータの削除確認】\n\n${snap.size}件の注文データ（${oldest}以前）が2年以上経過しています。\n\n削除してもよろしいですか？\n※この操作は取り消せません`);
     if(!confirmed)return;
     const batch=writeBatch(db);
     snap.docs.forEach(d=>batch.delete(d.ref));
     await batch.commit();
     alert(`${snap.size}件の古い注文データを削除しました。`);
-  }catch(e){
-    console.error('自動削除エラー:',e);
-  }
+  }catch(e){console.error('自動削除エラー:',e)}
 }
 
 function fmt(d){return`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`}
@@ -522,10 +569,7 @@ function getDateOptions(){
   for(let i=0;i<=3;i++){
     const d=new Date(today);d.setDate(today.getDate()+i);
     const s=fmt(d);
-    let label='';
-    if(i===0)label='今日分';
-    else if(i===1)label='明日分';
-    else label=`${i}日後分`;
+    let label=i===0?'今日分':i===1?'明日分':`${i}日後分`;
     opts.push({date:s,label,wd:wd(s)});
   }
   return opts;
@@ -542,13 +586,11 @@ function buildDateButtons(){
     b.innerHTML=`${o.date.slice(5).replace('/','/').replace(/^0/,'')}<span class="sub">${o.wd}曜 ${o.label}</span>`;
     b.onclick=()=>{
       document.querySelectorAll('.date-btn').forEach(x=>x.classList.remove('sel'));
-      b.classList.add('sel');
-      selDate=o.date;
+      b.classList.add('sel');selDate=o.date;
       document.getElementById('date-custom').classList.remove('show');
     };
     container.appendChild(b);
   });
-  // その他ボタン
   const other=document.createElement('button');
   other.className='date-btn';
   other.innerHTML='日付指定<span class="sub">カレンダー</span>';
@@ -561,28 +603,20 @@ function buildDateButtons(){
   selDate=today;
 }
 
-function selectDateCustom(v){
-  if(!v)return;
-  selDate=v.replace(/-/g,'/');
-}
+function selectDateCustom(v){if(!v)return;selDate=v.replace(/-/g,'/')}
 
 function buildShopList(){
   const container=document.getElementById('shop-list');
   container.innerHTML='';
   SHOPS.forEach(shop=>{
     const card=document.createElement('div');
-    card.className='shop-card';
-    card.id='sc-'+shop.id;
-
+    card.className='shop-card';card.id='sc-'+shop.id;
     const telLine=shop.tel?`<div class="shop-tel">☎ ${shop.tel}${shop.fax?' ／ FAX: '+shop.fax:''}</div>`:'';
     const noteLine=shop.note?`<div style="font-size:11px;color:var(--amber-d);margin-top:3px">※ ${shop.note}</div>`:'';
     const optHtml=shop.options.length?`<div class="sec-title" style="font-size:11px;margin-bottom:5px">オプション</div><div class="opt-row">${shop.options.map(o=>`<div class="opt-tag" onclick="toggleOpt(event,'${o}')">${o}</div>`).join('')}</div>`:'';
     const menuHtml=shop.menus.map(m=>`<div class="menu-btn" id="mb-${shop.id}-${m.id}" onclick="selectMenu(event,'${shop.id}','${m.id}')">${m.name}<span class="price">${m.price}</span></div>`).join('');
     const menuImgData=menuUrls[shop.id]||'';
-    const menuImgBlock=menuImgData
-      ?`<img class="menu-img-inline" src="${menuImgData}" alt="${shop.name}のメニュー" onclick="openMenuModal(this.src,'${shop.name}')" title="タップで拡大">`
-      :`<div class="menu-img-none">📷 メニュー画像は未登録です</div>`;
-
+    const menuImgBlock=menuImgData?`<img class="menu-img-inline" src="${menuImgData}" alt="${shop.name}のメニュー" onclick="openMenuModal(this.src,'${shop.name}')" title="タップで拡大">`:`<div class="menu-img-none">📷 メニュー画像は未登録です</div>`;
     card.innerHTML=`
       <div class="shop-head" onclick="selectShop('${shop.id}')">
         <div class="shop-head-l">
@@ -605,26 +639,16 @@ function buildShopList(){
 
 function selectShop(id){
   selShopId=id;selMenuId=null;selOpts=[];
-  // 全カードをリセット
-  document.querySelectorAll('.shop-card').forEach(c=>{
-    const sid=c.id.replace('sc-','');
-    c.classList.toggle('sel',sid===id);
-  });
-  // 全チェック丸をリセット（インラインスタイルも含めてクリア）
-  document.querySelectorAll('.shop-check').forEach(c=>{
-    c.textContent='✓';
-    c.style.background='';
-    c.style.borderColor='';
-    c.style.color='';
-  });
-  // 選択した店舗のチェック丸だけ塗る
+  document.querySelectorAll('.shop-card').forEach(c=>{const sid=c.id.replace('sc-','');c.classList.toggle('sel',sid===id)});
+  document.querySelectorAll('.shop-check').forEach(c=>{c.textContent='✓';c.style.background='';c.style.borderColor='';c.style.color=''});
   const chk=document.getElementById('chk-'+id);
   if(chk){chk.style.background='var(--warm)';chk.style.borderColor='var(--warm)';chk.style.color='#fff'}
   document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('sel'));
   document.querySelectorAll('.opt-tag').forEach(b=>b.classList.remove('sel'));
-  // 「その他」金額欄を非表示
-  document.getElementById('other-price-row').style.display='none';
-  document.getElementById('other-price-input').value='';
+  // 価格を自動セット
+  document.getElementById('pay-price').value='';
+  document.getElementById('pay-paid').value='';
+  document.getElementById('change-display').style.display='none';
 }
 
 function selectMenu(e,shopId,menuId){
@@ -633,14 +657,13 @@ function selectMenu(e,shopId,menuId){
   selMenuId=menuId;
   document.querySelectorAll(`[id^="mb-${shopId}-"]`).forEach(b=>b.classList.remove('sel'));
   document.getElementById(`mb-${shopId}-${menuId}`).classList.add('sel');
-  // 「その他」メニュー選択時は金額入力欄を表示
-  const priceRow=document.getElementById('other-price-row');
-  if(menuId==='other'){
-    priceRow.style.display='block';
-  } else {
-    priceRow.style.display='none';
-    document.getElementById('other-price-input').value='';
-  }
+  // 価格を自動反映
+  const shop=SHOPS.find(s=>s.id===shopId);
+  const menu=shop.menus.find(m=>m.id===menuId);
+  const priceInput=document.getElementById('pay-price');
+  if(menu.priceNum){priceInput.value=menu.priceNum;priceInput.readOnly=true}
+  else{priceInput.value='';priceInput.readOnly=false}
+  calcChange();
 }
 
 function toggleOpt(e,opt){
@@ -650,6 +673,19 @@ function toggleOpt(e,opt){
   else{selOpts.push(opt);el.classList.add('sel')}
 }
 
+function calcChange(){
+  const price=parseInt(document.getElementById('pay-price').value)||0;
+  const paid=parseInt(document.getElementById('pay-paid').value)||0;
+  const disp=document.getElementById('change-display');
+  const val=document.getElementById('change-val');
+  if(price>0&&paid>0){
+    const change=paid-price;
+    val.textContent=change>=0?`${change}円`:`-${Math.abs(change)}円 (不足)`;
+    val.style.color=change<0?'var(--red-d)':'var(--amber-d)';
+    disp.style.display='flex';
+  }else{disp.style.display='none'}
+}
+
 async function submitOrder(){
   if(!selDate){alert('注文対象日を選んでください');return}
   if(!selShopId){alert('注文先を選んでください');return}
@@ -657,33 +693,31 @@ async function submitOrder(){
   const shop=SHOPS.find(s=>s.id===selShopId);
   const menu=shop.menus.find(m=>m.id===selMenuId);
   const note=document.getElementById('ord-note').value.trim();
-  let menuPrice=menu.price;
-  if(selMenuId==='other'){
-    const pv=document.getElementById('other-price-input').value.trim();
-    if(pv) menuPrice=pv.replace(/円$/,'')+'円';
-  }
+  const priceVal=document.getElementById('pay-price').value.trim();
+  const paidVal=document.getElementById('pay-paid').value.trim();
+  const priceNum=priceVal?parseInt(priceVal):null;
+  const paidNum=paidVal?parseInt(paidVal):null;
+  const changeNum=(priceNum&&paidNum)?paidNum-priceNum:null;
+  const menuPrice=priceNum?`${priceNum}円`:menu.price||'';
   const now=new Date();
   const o={
     name:currentUser.name,ext:currentUser.ext,
-    orderDate:selDate,
-    registeredAt:fmt(now),
+    orderDate:selDate,registeredAt:fmt(now),
     time:`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
     shopId:selShopId,shopName:shop.name,
     menuId:selMenuId,menuName:menu.name,menuPrice,
-    opts:selOpts.slice(),
-    note,contacted:false,
-    createdAt:Date.now()
+    priceNum,paidNum,changeNum,
+    opts:selOpts.slice(),note,contacted:false,
+    createdAt:Date.now(),
+    changeLog:[]
   };
   const btn=document.querySelector('#ord-form .btn-p');
   if(btn){btn.disabled=true;btn.textContent='送信中...';}
   try{
-    await save(o);
+    await saveOrder(o);
     showSuccess(o);
-  }catch(e){
-    // エラーバナーはsave()内で表示済み
-  }finally{
-    if(btn){btn.disabled=false;btn.textContent='注文する';}
-  }
+  }catch(e){}
+  finally{if(btn){btn.disabled=false;btn.textContent='注文する';}}
 }
 
 function showSuccess(o){
@@ -691,11 +725,13 @@ function showSuccess(o){
   document.getElementById('ord-success').style.display='block';
   document.getElementById('suc-msg').textContent=`${o.orderDate}（${wd(o.orderDate)}）の注文を受け付けました`;
   const d=document.getElementById('suc-detail');
-  const priceDisp=(o.menuPrice&&o.menuPrice!=='備考に記入')?`　${o.menuPrice}`:'';
   d.innerHTML=`
     <div class="suc-detail-row"><span class="k">注文先</span><span class="v">${o.shopName}</span></div>
-    <div class="suc-detail-row"><span class="k">メニュー</span><span class="v">${o.menuName}${priceDisp}</span></div>
-    ${o.opts.length?`<div class="suc-detail-row"><span class="k">オプション</span><span class="v">${o.opts.join('、')}</span></div>`:''}
+    <div class="suc-detail-row"><span class="k">メニュー</span><span class="v">${o.menuName}${o.menuPrice?' '+o.menuPrice:''}</span></div>
+    ${o.priceNum?`<div class="suc-detail-row"><span class="k">価格</span><span class="v">${o.priceNum}円</span></div>`:''}
+    ${o.paidNum?`<div class="suc-detail-row"><span class="k">入金額</span><span class="v">${o.paidNum}円</span></div>`:''}
+    ${o.changeNum!==null?`<div class="suc-detail-row"><span class="k">おつり</span><span class="v">${o.changeNum}円</span></div>`:''}
+    ${o.opts&&o.opts.length?`<div class="suc-detail-row"><span class="k">オプション</span><span class="v">${o.opts.join('、')}</span></div>`:''}
     ${o.note?`<div class="suc-detail-row"><span class="k">備考</span><span class="v">${o.note}</span></div>`:''}
     <div class="suc-detail-row"><span class="k">登録日時</span><span class="v">${o.registeredAt} ${o.time}</span></div>`;
 }
@@ -709,10 +745,104 @@ function resetOrder(){
   document.querySelectorAll('.opt-tag').forEach(b=>b.classList.remove('sel'));
   document.querySelectorAll('.shop-check').forEach(c=>{c.style.background='';c.style.borderColor='';c.style.color=''});
   document.getElementById('ord-note').value='';
-  document.getElementById('other-price-row').style.display='none';
-  document.getElementById('other-price-input').value='';
-  buildDateButtons();
-  window.scrollTo(0,0);
+  document.getElementById('pay-price').value='';
+  document.getElementById('pay-paid').value='';
+  document.getElementById('change-display').style.display='none';
+  buildDateButtons();window.scrollTo(0,0);
+}
+
+// ---- 自分の注文履歴 ----
+function renderMyHistory(){
+  const today=fmt(new Date());
+  const myOrders=orders.filter(o=>o.name===currentUser.name).sort((a,b)=>b.orderDate.localeCompare(a.orderDate)||b.createdAt-a.createdAt);
+  const cont=document.getElementById('my-hist-list');
+  cont.innerHTML='';
+  if(!myOrders.length){cont.innerHTML='<div class="empty">注文履歴はありません</div>';return}
+  myOrders.forEach(o=>{
+    const isToday=o.orderDate===today;
+    const canEdit=isToday;
+    const div=document.createElement('div');div.className='my-hist-item';
+    const changeLogHtml=(o.changeLog&&o.changeLog.length)?o.changeLog.map(c=>`<div class="change-log">📝 ${c}</div>`).join(''):'';
+    div.innerHTML=`
+      <div class="my-hist-head">
+        <div>
+          <div class="my-hist-date">${o.orderDate}（${wd(o.orderDate)}）</div>
+          <div class="my-hist-shop">${o.shopName}</div>
+          <div class="my-hist-menu">${o.menuName}${o.menuPrice?' '+o.menuPrice:''}</div>
+          ${o.priceNum?`<div class="my-hist-meta">価格：${o.priceNum}円　入金：${o.paidNum||'—'}円　おつり：${o.changeNum!==null?o.changeNum+'円':'—'}</div>`:''}
+          ${o.opts&&o.opts.length?`<div class="my-hist-meta">オプション：${o.opts.join('、')}</div>`:''}
+          ${o.note?`<div class="my-hist-meta">備考：${o.note}</div>`:''}
+        </div>
+        <button class="edit-btn" ${canEdit?'':'disabled'} onclick="openEditModal('${o.docId}')">${canEdit?'変更':'変更不可'}</button>
+      </div>
+      <div class="my-hist-meta" style="margin-top:4px">登録：${o.registeredAt} ${o.time}</div>
+      ${changeLogHtml}`;
+    cont.appendChild(div);
+  });
+}
+
+// ---- 注文変更モーダル ----
+function openEditModal(docId){
+  const o=orders.find(x=>x.docId===docId);
+  if(!o)return;
+  editingDocId=docId;
+  document.getElementById('edit-modal-sub').textContent=`${o.orderDate}（${wd(o.orderDate)}） ${o.shopName}`;
+  const shop=SHOPS.find(s=>s.id===o.shopId)||{menus:[]};
+  const body=document.getElementById('edit-modal-body');
+  body.innerHTML=`
+    <div class="fld"><label>メニュー</label>
+      <select id="em-menu">
+        ${shop.menus.map(m=>`<option value="${m.id}" ${m.id===o.menuId?'selected':''}>${m.name}${m.price?' ('+m.price+')':''}</option>`).join('')}
+      </select>
+    </div>
+    <div class="payment-box" style="margin-bottom:13px">
+      <div class="payment-box-title">💴 お支払い</div>
+      <div class="payment-row"><label>価格</label><input type="number" id="em-price" inputmode="numeric" value="${o.priceNum||''}" placeholder="手入力"/><span class="yen">円</span></div>
+      <div class="payment-row"><label>入金額</label><input type="number" id="em-paid" inputmode="numeric" value="${o.paidNum||''}" placeholder=""/><span class="yen">円</span></div>
+    </div>
+    <div class="fld"><label>備考</label><textarea id="em-note" style="height:54px">${o.note||''}</textarea></div>
+    <button class="btn btn-p" onclick="submitEdit()">変更を保存する</button>
+    <button class="btn btn-s" onclick="closeEditModal()">キャンセル</button>`;
+  document.getElementById('edit-modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+async function submitEdit(){
+  const o=orders.find(x=>x.docId===editingDocId);
+  if(!o)return;
+  const shop=SHOPS.find(s=>s.id===o.shopId);
+  const newMenuId=document.getElementById('em-menu').value;
+  const newMenu=shop.menus.find(m=>m.id===newMenuId);
+  const newNote=document.getElementById('em-note').value.trim();
+  const newPriceNum=parseInt(document.getElementById('em-price').value)||null;
+  const newPaidNum=parseInt(document.getElementById('em-paid').value)||null;
+  const newChangeNum=(newPriceNum&&newPaidNum)?newPaidNum-newPriceNum:null;
+  const newMenuPrice=newPriceNum?`${newPriceNum}円`:newMenu.price||'';
+  // 変更内容を記録
+  const logs=[];
+  if(newMenuId!==o.menuId)logs.push(`メニュー：${o.menuName} → ${newMenu.name}`);
+  if(newNote!==o.note)logs.push(`備考：「${o.note||'なし'}」→「${newNote||'なし'}」`);
+  if(newPriceNum!==o.priceNum)logs.push(`価格：${o.priceNum||'未入力'} → ${newPriceNum||'未入力'}円`);
+  if(newPaidNum!==o.paidNum)logs.push(`入金額：${o.paidNum||'未入力'} → ${newPaidNum||'未入力'}円`);
+  if(!logs.length){alert('変更はありませんでした');return}
+  const now=new Date();
+  const logEntry=`${fmt(now)} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} ${logs.join('、')}`;
+  const changeLog=[...(o.changeLog||[]),logEntry];
+  await updateOrder(editingDocId,{
+    menuId:newMenuId,menuName:newMenu.name,menuPrice:newMenuPrice,
+    note:newNote,priceNum:newPriceNum,paidNum:newPaidNum,changeNum:newChangeNum,
+    changeLog
+  });
+  closeEditModal();
+  renderMyHistory();
+  alert('変更を保存しました');
+}
+
+function closeEditModal(e){
+  if(e&&e.target!==document.getElementById('edit-modal-overlay'))return;
+  document.getElementById('edit-modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+  editingDocId=null;
 }
 
 // ---- ADMIN ----
@@ -724,8 +854,7 @@ function buildAdminDateSel(){
   const allDates=[...new Set([today,...dates])].sort((a,b)=>b.localeCompare(a));
   allDates.slice(0,14).forEach(d=>{
     const o=document.createElement('option');
-    o.value=d;
-    o.textContent=`${d}（${wd(d)}）${d===today?'  ← 本日':''}`
+    o.value=d;o.textContent=`${d}（${wd(d)}）${d===today?'  ← 本日':''}`;
     sel.appendChild(o);
   });
   sel.value=today;
@@ -736,21 +865,24 @@ function renderAdminOrders(){
   const dayOrders=orders.filter(o=>o.orderDate===date);
   const sum=document.getElementById('adm-sum');
   const cont=document.getElementById('adm-orders');
-
-  // summary chips
   const byShop={};
   dayOrders.forEach(o=>{byShop[o.shopId]=(byShop[o.shopId]||0)+1});
-  const shop=SHOPS.find(s=>s.id==='takumi');
   const chips=Object.entries(byShop).map(([sid,cnt])=>{
     const s=SHOPS.find(x=>x.id===sid)||{name:sid,tag:'chip-other'};
     return`<span class="sum-chip ${s.tag}">${s.name}：${cnt}件</span>`;
   }).join('');
-  sum.innerHTML=`<div class="sum-box"><div class="sum-title">📋 ${date}（${wd(date)}）の注文　合計 ${dayOrders.length} 件</div><div class="sum-chips">${chips||'<span style="font-size:13px;color:var(--tx3)">注文なし</span>'}</div></div>`;
-
+  // 合計金額
+  const totalPrice=dayOrders.reduce((a,o)=>a+(o.priceNum||0),0);
+  const totalPaid=dayOrders.reduce((a,o)=>a+(o.paidNum||0),0);
+  const totalChange=dayOrders.reduce((a,o)=>a+(o.changeNum||0),0);
+  const totalHtml=totalPrice>0?`<div class="sum-total-box">
+    <div class="sum-total-item">合計金額：<span>${totalPrice}円</span></div>
+    <div class="sum-total-item">合計入金：<span>${totalPaid}円</span></div>
+    <div class="sum-total-item">合計おつり：<span>${totalChange}円</span></div>
+  </div>`:'';
+  sum.innerHTML=`<div class="sum-box"><div class="sum-title">📋 ${date}（${wd(date)}）の注文　合計 ${dayOrders.length} 件</div><div class="sum-chips">${chips||'<span style="font-size:13px;color:var(--tx3)">注文なし</span>'}</div>${totalHtml}</div>`;
   cont.innerHTML='';
   if(!dayOrders.length){cont.innerHTML='<div class="empty">この日の注文はありません</div>';return}
-
-  // 匠グループ
   const takumiOrders=dayOrders.filter(o=>o.shopId==='takumi');
   if(takumiOrders.length){
     const g=document.createElement('div');g.className='order-group';
@@ -758,19 +890,15 @@ function renderAdminOrders(){
     takumiOrders.forEach(o=>g.appendChild(makeOrderCard(o)));
     cont.appendChild(g);
   }
-
-  // その他グループ
   const otherOrders=dayOrders.filter(o=>o.shopId!=='takumi');
   if(otherOrders.length){
     const g=document.createElement('div');g.className='order-group';
     g.innerHTML=`<div class="order-group-title og-other">その他の店舗　${otherOrders.length}件</div>`;
-    // 店舗別にさらにグループ
     const byS={};
     otherOrders.forEach(o=>{if(!byS[o.shopId])byS[o.shopId]=[];byS[o.shopId].push(o)});
     Object.entries(byS).forEach(([sid,list])=>{
       const s=SHOPS.find(x=>x.id===sid)||{name:sid};
-      const sub=document.createElement('div');
-      sub.style.marginBottom='10px';
+      const sub=document.createElement('div');sub.style.marginBottom='10px';
       sub.innerHTML=`<div style="font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:5px">${s.name}　${list.length}件${s.tel?'　<span style="font-size:11px;color:var(--tx3)">☎ '+s.tel+'</span>':''}</div>`;
       list.forEach(o=>sub.appendChild(makeOrderCard(o)));
       g.appendChild(sub);
@@ -785,17 +913,17 @@ function makeOrderCard(o){
   const mb=o.contacted?'':`<button class="mark-btn" onclick="markContacted('${o.docId}')">連絡済にする</button>`;
   const opts=o.opts&&o.opts.length?`<div class="oi-note">オプション：${o.opts.join('、')}</div>`:'';
   const note=o.note?`<div class="oi-note">備考：${o.note}</div>`:'';
+  const payHtml=(o.priceNum||o.paidNum)?`<div class="oi-payment">価格：<span>${o.priceNum?o.priceNum+'円':'—'}</span>　入金：<span>${o.paidNum?o.paidNum+'円':'—'}</span>　おつり：<span>${o.changeNum!==null?o.changeNum+'円':'—'}</span></div>`:'';
+  const changeLogHtml=(o.changeLog&&o.changeLog.length)?o.changeLog.map(c=>`<div class="change-log">📝 ${c}</div>`).join(''):'';
   div.innerHTML=`
     <div class="oi-head"><span class="oi-name">${o.name}</span>${badge}</div>
-    <div class="oi-menu">${o.menuName}　<span style="font-size:12px;color:var(--tx3)">${o.menuPrice}</span></div>
-    ${opts}${note}
+    <div class="oi-menu">${o.menuName}${o.menuPrice?' '+o.menuPrice:''}</div>
+    ${payHtml}${opts}${note}${changeLogHtml}
     <div class="oi-meta"><span class="oi-time">登録：${o.registeredAt} ${o.time}</span>${mb}</div>`;
   return div;
 }
 
-function markContacted(docId){
-  saveContacted(docId);
-}
+function markContacted(docId){updateOrder(docId,{contacted:true})}
 
 function renderAdminHistory(){
   const today=fmt(new Date());
@@ -817,12 +945,14 @@ function renderAdminHistory(){
       <div class="hist-body ${di===0?'open':''}">
         <div class="hist-sum">${chips}</div>
         <table class="hist-table">
-          <thead><tr><th>氏名</th><th>店舗</th><th>メニュー</th><th>備考</th></tr></thead>
+          <thead><tr><th>氏名</th><th>店舗</th><th>メニュー</th><th>価格</th><th>入金</th><th>おつり</th></tr></thead>
           <tbody>${rows.map(o=>`<tr>
             <td>${o.name}</td>
             <td><span class="htag ${(SHOPS.find(s=>s.id===o.shopId)||{tag:'chip-other'}).tag}" style="font-size:10px;padding:2px 6px">${o.shopName}</span></td>
             <td style="font-size:12px">${o.menuName}</td>
-            <td style="font-size:11px;color:var(--tx3)">${[...(o.opts||[]),o.note||''].filter(Boolean).join('、')||'—'}</td>
+            <td style="font-size:12px">${o.priceNum?o.priceNum+'円':'—'}</td>
+            <td style="font-size:12px">${o.paidNum?o.paidNum+'円':'—'}</td>
+            <td style="font-size:12px">${o.changeNum!==null?o.changeNum+'円':'—'}</td>
           </tr>`).join('')}</tbody>
         </table>
       </div>`;
@@ -848,16 +978,11 @@ function showATab(tab){
 }
 
 function renderAdminMenu(){
-  const cont=document.getElementById('adm-menu-list');
-  cont.innerHTML='';
+  const cont=document.getElementById('adm-menu-list');cont.innerHTML='';
   SHOPS.forEach(shop=>{
     const data=menuUrls[shop.id]||'';
-    const row=document.createElement('div');
-    row.className='adm-menu-row';
-    row.id='amr-'+shop.id;
-    const previewHtml=data
-      ?`<div class="adm-preview"><img src="${data}" alt="${shop.name}のメニュー"/></div>`
-      :'';
+    const row=document.createElement('div');row.className='adm-menu-row';row.id='amr-'+shop.id;
+    const previewHtml=data?`<div class="adm-preview"><img src="${data}" alt="${shop.name}のメニュー"/></div>`:'';
     row.innerHTML=`
       <div class="adm-menu-row-top">
         <span class="adm-menu-name">${shop.name}</span>
@@ -868,7 +993,7 @@ function renderAdminMenu(){
         <input type="file" accept="image/*" id="afi-${shop.id}" onchange="onFileSelect('${shop.id}',this)"/>
         <div class="up-icon">📷</div>
         <div class="up-label">${data?'画像を差し替える':'画像をアップロード'}</div>
-        <div class="up-sub">タップまたはクリックして選択（JPEG・PNG・GIF）</div>
+        <div class="up-sub">タップまたはクリックして選択（JPEG・PNG・GIF・200KB以下）</div>
       </div>
       <div class="adm-menu-btns">
         <button class="adm-menu-save" id="amsb-${shop.id}" onclick="saveMenuImg('${shop.id}')" disabled>保存する</button>
@@ -878,62 +1003,65 @@ function renderAdminMenu(){
   });
 }
 
-// ---- 選択中の未保存Base64を一時保管 ----
 const pendingImgs={};
-
-function onFileSelect(shopId, input){
-  const file=input.files[0];
-  if(!file)return;
+function onFileSelect(shopId,input){
+  const file=input.files[0];if(!file)return;
   if(file.size>200*1024){alert('ファイルサイズが大きすぎます。200KB以下の画像を使用してください。\n\n【圧縮方法の目安】\n・Windowsのペイントで「名前を付けて保存」→JPEGで保存\n・スマホの場合は圧縮アプリをご利用ください');input.value='';return}
   const reader=new FileReader();
   reader.onload=function(e){
     const b64=e.target.result;
     pendingImgs[shopId]=b64;
-    // プレビュー更新
-    const pDiv=document.getElementById('amp-'+shopId);
-    pDiv.innerHTML=`<div class="adm-preview"><img src="${b64}" alt="プレビュー"/></div>`;
-    // アップロードエリアのラベル更新
-    const ua=document.getElementById('aua-'+shopId);
-    ua.querySelector('.up-label').textContent='別の画像を選択する';
-    // 保存ボタンを有効化
-    const sb=document.getElementById('amsb-'+shopId);
-    sb.disabled=false;
-    sb.textContent='保存する';
+    document.getElementById('amp-'+shopId).innerHTML=`<div class="adm-preview"><img src="${b64}" alt="プレビュー"/></div>`;
+    document.getElementById('aua-'+shopId).querySelector('.up-label').textContent='別の画像を選択する';
+    const sb=document.getElementById('amsb-'+shopId);sb.disabled=false;sb.textContent='保存する';
   };
   reader.readAsDataURL(file);
 }
-
 async function saveMenuImg(shopId){
-  const b64=pendingImgs[shopId];
-  if(!b64){alert('画像が選択されていません');return}
-  menuUrls[shopId]=b64;
-  delete pendingImgs[shopId];
-  await saveMenuUrls();
-  buildShopList();
-  renderAdminMenu();
+  const b64=pendingImgs[shopId];if(!b64){alert('画像が選択されていません');return}
+  menuUrls[shopId]=b64;delete pendingImgs[shopId];
+  await saveMenuUrls();buildShopList();renderAdminMenu();
   alert('メニュー画像を保存しました。注文画面に画像が表示されます。');
 }
-
 async function clearMenuImg(shopId){
   if(!confirm(`${SHOPS.find(s=>s.id===shopId).name} のメニュー画像を削除しますか？`)){return}
-  delete menuUrls[shopId];
-  delete pendingImgs[shopId];
-  await saveMenuUrls();
-  buildShopList();
-  renderAdminMenu();
+  delete menuUrls[shopId];delete pendingImgs[shopId];
+  await saveMenuUrls();buildShopList();renderAdminMenu();
 }
 
-// ---- モーダル ----
-function openMenuModal(src, name){
+function openMenuModal(src,name){
   const modal=document.getElementById('menu-modal');
-  const img=document.getElementById('menu-modal-img');
-  img.src=src;img.alt=name+'のメニュー';
-  modal.classList.add('open');
-  document.body.style.overflow='hidden';
+  document.getElementById('menu-modal-img').src=src;
+  document.getElementById('menu-modal-img').alt=name+'のメニュー';
+  modal.classList.add('open');document.body.style.overflow='hidden';
 }
 function closeMenuModal(){
-  document.getElementById('menu-modal').classList.remove('open');
-  document.body.style.overflow='';
+  document.getElementById('menu-modal').classList.remove('open');document.body.style.overflow='';
+}
+
+// ---- NAVIGATION ----
+function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+
+function goOrder(){
+  document.getElementById('ord-uname').textContent=currentUser.name+' さん';
+  document.getElementById('ord-uext').textContent='内線：'+currentUser.ext;
+  document.getElementById('ord-success').style.display='none';
+  document.getElementById('ord-form').style.display='block';
+  resetOrder();
+  show('scr-order');
+}
+function goMyHistory(){
+  document.getElementById('mh-uname').textContent=currentUser.name+' さん';
+  document.getElementById('mh-uext').textContent='内線：'+currentUser.ext;
+  renderMyHistory();
+  show('scr-my-hist');
+}
+function goAdmin(){
+  buildAdminDateSel();renderAdminOrders();show('scr-admin');
+}
+function goTopFromOrder(){
+  if(currentUser.admin)show('scr-top-admin');
+  else show('scr-top');
 }
 
 // ---- INIT ----
@@ -941,23 +1069,13 @@ function closeMenuModal(){
   const sel=document.getElementById('ln-name');
   MEMBERS.forEach(m=>{const o=document.createElement('option');o.value=m.name;o.textContent=m.name+(m.admin?' （管理者）':'');sel.appendChild(o)});
   buildDateButtons();
-  // メニュー画像をFirestoreから読み込んでから店舗リスト構築
   loadMenuUrls();
-  // 注文データをリアルタイム監視
   const q=query(collection(db,'orders'),orderBy('createdAt','asc'));
   onSnapshot(q,snap=>{
     orders=snap.docs.map(d=>({...d.data(),docId:d.id}));
-    if(currentUser&&currentUser.admin){
-      renderAdminOrders();
-      buildAdminDateSel();
-    }
-  },err=>{
-    console.error(err);
-    showFirebaseError('データの読み込みに失敗しました。');
-  });
+    if(currentUser&&currentUser.admin){renderAdminOrders();buildAdminDateSel()}
+  },err=>{console.error(err);showFirebaseError('データの読み込みに失敗しました。')});
 })();
-
-function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
 
 function doLogin(){
   const name=document.getElementById('ln-name').value,pass=document.getElementById('ln-pass').value;
@@ -966,40 +1084,39 @@ function doLogin(){
   if(!m){err.style.display='block';return}
   currentUser=m;
   if(m.admin){
+    document.getElementById('top-adm-uname').textContent=m.name+' さん';
+    document.getElementById('top-adm-uext').textContent='内線：'+m.ext;
+    document.getElementById('top-adm-greeting').textContent=`おはようございます、${m.name}さん`;
     document.getElementById('adm-namebar').textContent=m.name+' ('+m.ext+')';
-    buildAdminDateSel();
-    renderAdminOrders();
     autoCleanOldOrders();
-    show('scr-admin');
-  } else {
-    document.getElementById('ord-uname').textContent=m.name+' さん';
-    document.getElementById('ord-uext').textContent='内線：'+m.ext;
-    document.getElementById('ord-success').style.display='none';
-    document.getElementById('ord-form').style.display='block';
-    show('scr-order');
+    show('scr-top-admin');
+  }else{
+    document.getElementById('top-uname').textContent=m.name+' さん';
+    document.getElementById('top-uext').textContent='内線：'+m.ext;
+    document.getElementById('top-greeting').textContent=`おはようございます、${m.name}さん`;
+    show('scr-top');
   }
 }
 
-function doLogout(){currentUser=null;selShopId=null;selMenuId=null;selOpts=[];selDate=null;document.getElementById('ln-name').value='';document.getElementById('ln-pass').value='';document.getElementById('ln-err').style.display='none';show('scr-login')}
+function doLogout(){
+  currentUser=null;selShopId=null;selMenuId=null;selOpts=[];selDate=null;
+  document.getElementById('ln-name').value='';document.getElementById('ln-pass').value='';
+  document.getElementById('ln-err').style.display='none';
+  show('scr-login');
+}
 
-// onclick属性から呼べるようにwindowに公開
-window.doLogin=doLogin;
-window.doLogout=doLogout;
-window.selectShop=selectShop;
-window.selectMenu=selectMenu;
-window.toggleOpt=toggleOpt;
-window.submitOrder=submitOrder;
-window.resetOrder=resetOrder;
-window.selectDateCustom=selectDateCustom;
-window.showATab=showATab;
-window.markContacted=markContacted;
-window.toggleHist=toggleHist;
+// window公開
+window.doLogin=doLogin;window.doLogout=doLogout;
+window.selectShop=selectShop;window.selectMenu=selectMenu;window.toggleOpt=toggleOpt;
+window.submitOrder=submitOrder;window.resetOrder=resetOrder;window.selectDateCustom=selectDateCustom;
+window.calcChange=calcChange;
+window.showATab=showATab;window.markContacted=markContacted;window.toggleHist=toggleHist;
 window.renderAdminOrders=renderAdminOrders;
-window.onFileSelect=onFileSelect;
-window.saveMenuImg=saveMenuImg;
-window.clearMenuImg=clearMenuImg;
-window.openMenuModal=openMenuModal;
-window.closeMenuModal=closeMenuModal;
+window.onFileSelect=onFileSelect;window.saveMenuImg=saveMenuImg;window.clearMenuImg=clearMenuImg;
+window.openMenuModal=openMenuModal;window.closeMenuModal=closeMenuModal;
+window.openEditModal=openEditModal;window.submitEdit=submitEdit;window.closeEditModal=closeEditModal;
+window.goOrder=goOrder;window.goMyHistory=goMyHistory;window.goAdmin=goAdmin;window.goTopFromOrder=goTopFromOrder;
+window.show=show;
 </script>
 </body>
 </html>
